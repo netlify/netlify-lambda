@@ -27,7 +27,6 @@ program
         return;
       }
 
-      console.log(stats.compilation);
       stats.compilation.chunks.forEach(function(chunk) {
         server.clearCache(chunk.name);
       });
@@ -52,5 +51,4 @@ program
       });
   });
 
-console.log("hmm", process.argv);
 program.parse(process.argv);
