@@ -2,6 +2,7 @@
   "name": "netlify-lambda",
   "version": "0.1.0",
   "description": "Build and serve lambda function with webpack compilation",
+  "homepage": "https://github.com/netlify/netlify-lambda#readme",
   "main": "bin/cmd.js",
   "bin": {
     "netlify-lambda": "bin/cmd.js"
@@ -11,6 +12,13 @@
   },
   "author": "Mathias Biilmann Christensen",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netlify/netlify-lambda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/netlify/netlify-lambda/issues"
+  },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-assign": "^6.22.0",
