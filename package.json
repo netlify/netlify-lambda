@@ -1,6 +1,6 @@
 {
   "name": "netlify-lambda",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build and serve lambda function with webpack compilation",
   "homepage": "https://github.com/netlify/netlify-lambda#readme",
   "main": "bin/cmd.js",
