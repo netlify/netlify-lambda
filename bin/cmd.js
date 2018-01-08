@@ -16,12 +16,15 @@ var serve = require("../lib/serve");
 program.version(pkg.version);
 
 program
+  .option("-c --config <webpack-config>", "additional webpack configuration")
+
+program
   .command("serve <dir>")
   .description("serve and watch functions")
   .action(function(cmd, options) {
     console.log("Starting server");
     var server = serve.listen(9000);
-    build.watch(cmd, function(err, stats) {
+    build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
         return;
@@ -41,7 +44,7 @@ program
   .action(function(cmd, options) {
     console.log("Building functions");
     build
-      .run(cmd)
+      .run(cmd, program.config)
       .then(function(stats) {
         console.log(stats.toString({ color: true }));
       })

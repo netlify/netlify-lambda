@@ -23,6 +23,14 @@ http://localhost:9000/hello -> folder/hello.js (must export a handler(event, con
 
 The `build` function will run a single build of the functions in the folder.
 
+## Webpack Configuration
+
+By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a few basic settings are used.
+
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c` option when running either `serve` or `build`.
+
+The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
+
 ## License
 
 [MIT](LICENSE)
