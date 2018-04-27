@@ -23,6 +23,30 @@ http://localhost:9000/hello -> folder/hello.js (must export a handler(event, con
 
 The `build` function will run a single build of the functions in the folder.
 
+### Proxying for local development
+
+When your function is deployed on Netlify, it will be available at `/.netlify/functions/function-name` for any given deploy context.  It is advantageous to proxy the `netlify-lambda serve` development server to the same path on your primary development server.
+
+Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000.  Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
+
+See [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/3b5fac5fcbcba0e775b755311d29242f0fc1d68e/package.json#L19) for an example of how to do this.
+
+[Example webpack config](https://github.com/imorente/netlify-functions-example/blob/master/webpack.development.config):
+
+```js
+module.exports = {
+  mode: 'development',
+  devServer: {
+    proxy: {
+      "/.netlify": {
+        target: "http://localhost:9000",
+        pathRewrite: {"^/.netlify/functions" : ""}
+      }
+    }
+  }
+}
+```
+
 ## Webpack Configuration
 
 By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
