@@ -41,11 +41,12 @@ program
 
 program
   .command("build <dir>")
+  .option('-o, --output <outputDirectory>', 'Output directory for built functions')
   .description("build functions")
   .action(function(cmd, options) {
     console.log("Building functions");
     build
-      .run(cmd, program.config)
+      .run(cmd, program.config, options)
       .then(function(stats) {
         console.log(stats.toString({ color: true }));
       })
