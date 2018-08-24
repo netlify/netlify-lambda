@@ -6,7 +6,7 @@ The goal is to make it easy to work with Lambda's with modern ES6 without being 
 
 ## Usage
 
-Netlify lambda installs two commands:
+Netlify lambda provides two commands:
 
 ```
 netlify-lambda serve <folder>
@@ -22,6 +22,13 @@ http://localhost:9000/hello -> folder/hello.js (must export a handler(event, con
 ```
 
 The `build` function will run a single build of the functions in the folder.
+
+There are additional options, introduced later:
+```bash
+-h --help
+-c --config
+-p --port
+```
 
 ### Proxying for local development
 
@@ -46,14 +53,22 @@ module.exports = {
   }
 }
 ```
+The serving port can be changed with the `-p`/`--port` option.
 
-## Webpack Configuration
+### Webpack Configuration
 
-By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
+This tool includes a default webpack configuration using `babel-loader` to load all js files.
 
-If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c` option when running either `serve` or `build`.
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
+
+### babel configuration
+
+The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
+
+However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one.
+
 
 ## License
 
