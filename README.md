@@ -4,6 +4,12 @@ This is a small CLI tool that helps with building or serving lambdas built with 
 
 The goal is to make it easy to work with Lambda's with modern ES6 without being dependent on having the most state of the art node runtime available in the final deployment environment and with a build that can compile all modules into a single lambda file.
 
+## Installation
+
+We recommend installing locally rather than globally: `yarn add -D netlify-lambda`
+
+At the present moment you may have to also install peer dependencies [as documented here](https://github.com/netlify/netlify-lambda/issues/35) - we will correct this for the next release when we update our [webpack and babel versions](https://github.com/netlify/netlify-lambda/pull/15).
+
 ## Usage
 
 Netlify lambda installs two commands:
