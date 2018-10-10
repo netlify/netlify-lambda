@@ -25,8 +25,8 @@ program
   .description("serve and watch functions")
   .action(function(cmd, options) {
     console.log("Starting server");
-    var server = serve.listen(program.port || 9000);
     var static = Boolean(program.static);
+    var server = serve.listen(program.port || 9000, static);
     if(static) {
       return
     }
