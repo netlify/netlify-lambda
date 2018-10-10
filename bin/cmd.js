@@ -18,6 +18,7 @@ program.version(pkg.version);
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
+  .option("-s --static", "serve pre-built lambda files")
 
 program
   .command("serve <dir>")
@@ -25,6 +26,10 @@ program
   .action(function(cmd, options) {
     console.log("Starting server");
     var server = serve.listen(program.port || 9000);
+    var static = Boolean(program.static);
+    if(static) {
+      return
+    }
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
