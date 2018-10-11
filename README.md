@@ -34,6 +34,7 @@ There are additional options, introduced later:
 -h --help
 -c --config
 -p --port
+-s --static
 ```
 
 ### Proxying for local development
@@ -75,6 +76,10 @@ The additional webpack config will be merged into the default config via [webpac
 The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
 
 However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one.
+
+### --static option
+
+If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
 
 ## License
 
