@@ -29,6 +29,13 @@ http://localhost:9000/hello -> folder/hello.js (must export a handler(event, con
 
 The `build` function will run a single build of the functions in the folder.
 
+There are additional options, introduced later:
+```bash
+-h --help
+-c --config
+-p --port
+```
+
 ### Proxying for local development
 
 When your function is deployed on Netlify, it will be available at `/.netlify/functions/function-name` for any given deploy context. It is advantageous to proxy the `netlify-lambda serve` development server to the same path on your primary development server.
@@ -53,13 +60,21 @@ module.exports = {
 };
 ```
 
+The serving port can be changed with the `-p`/`--port` option.
+
 ## Webpack Configuration
 
 By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
 
-If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c` option when running either `serve` or `build`.
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
+
+### babel configuration
+
+The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
+
+However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one.
 
 ## License
 
