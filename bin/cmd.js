@@ -24,12 +24,10 @@ program
   .command("serve <dir>")
   .description("serve and watch functions")
   .action(function(cmd, options) {
-    console.log("Starting server");
+    console.log("netlify-lambda: Starting server");
     var static = Boolean(program.static);
     var server = serve.listen(program.port || 9000, static);
-    if(static) {
-      return
-    }
+    if (static) return // early terminate, don't build
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
@@ -48,7 +46,7 @@ program
   .command("build <dir>")
   .description("build functions")
   .action(function(cmd, options) {
-    console.log("Building functions");
+    console.log("netlify-lambda: Building functions");
     build
       .run(cmd, program.config)
       .then(function(stats) {
