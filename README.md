@@ -67,7 +67,7 @@ The serving port can be changed with the `-p`/`--port` option.
 
 By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
 
-If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`. See this issue for an example of [how to write a webpack override file](https://github.com/netlify/netlify-lambda/issues/64).
 
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
 
@@ -75,11 +75,21 @@ The additional webpack config will be merged into the default config via [webpac
 
 The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
 
-However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one.
+However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one. If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
 
 ### --static option
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
+
+## Other community approaches
+
+If you wish to serve the full website from lambda, [check this issue](https://github.com/netlify/netlify-lambda/issues/36).
+
+If you wish to run this server for testing, [check this issue](https://github.com/netlify/netlify-lambda/issues/49).
+
+If you wish to emulate more Netlify functionality locally, [check this repo](https://github.com/8eecf0d2/netlify-local)
+
+All of the above are community maintained and not officially supported by Netlify.
 
 ## License
 
