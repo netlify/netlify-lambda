@@ -82,13 +82,17 @@ However, if any `.babelrc` is found in the directory `netlify-lambda` is run fro
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
 
+## Netlify Identity
+
+Netlify Identity is [not supported at the moment](https://github.com/netlify/netlify-lambda/issues/51) inside `netlify-lambda` function emulation, but for now you can [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how they should work.
+
 ## Other community approaches
 
 If you wish to serve the full website from lambda, [check this issue](https://github.com/netlify/netlify-lambda/issues/36).
 
 If you wish to run this server for testing, [check this issue](https://github.com/netlify/netlify-lambda/issues/49).
 
-If you wish to emulate more Netlify functionality locally, [check this repo](https://github.com/8eecf0d2/netlify-local)
+If you wish to emulate more Netlify functionality locally, [check this repo](https://github.com/8eecf0d2/netlify-local).
 
 All of the above are community maintained and not officially supported by Netlify.
 
