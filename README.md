@@ -43,7 +43,7 @@ When your function is deployed on Netlify, it will be available at `/.netlify/fu
 
 Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000. Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
 
-See [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/3b5fac5fcbcba0e775b755311d29242f0fc1d68e/package.json#L19) for an example of how to do this.
+See [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this.
 
 [Example webpack config](https://github.com/imorente/netlify-functions-example/blob/master/webpack.development.config):
 
