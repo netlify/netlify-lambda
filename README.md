@@ -72,11 +72,13 @@ If you need to use additional webpack modules or loaders, you can specify an add
 
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
 
-### babel configuration
+### Babel configuration
 
 The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
 
 However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one. If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
+
+We added `.ts` and `.mjs` support recently - [check here for the PR and usage tips](https://github.com/netlify/netlify-lambda/pull/76).
 
 ### --static option
 
