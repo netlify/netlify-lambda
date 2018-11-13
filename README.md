@@ -37,6 +37,14 @@ There are additional options, introduced later:
 -s --static
 ```
 
+## Using with `create-react-app`, Gatsby, and other development servers
+
+`react-scripts` (the underlying library for `create-react-app`) and other popular development servers often set up catchall serving for you; in other words, if you try to request a route that doesn't exist, the dev server will try to serve you `/index.html`. This is problematic when you are trying to hit a local API endpoint like `netlify-lambda` sets up for you - your browser will attempt to parse the `index.html` file as JSON. This is why you may see this error:
+
+`Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0`
+
+If this desribes your situation, then you need to proxy for local development. Read on. Don't worry it's easier than it looks.
+
 ### Proxying for local development
 
 When your function is deployed on Netlify, it will be available at `/.netlify/functions/function-name` for any given deploy context. It is advantageous to proxy the `netlify-lambda serve` development server to the same path on your primary development server.
