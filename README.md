@@ -86,7 +86,38 @@ The default webpack configuration uses `babel-loader` with a [few basic settings
 
 However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one. If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
 
+### How to use TypeScript
+
 We added `.ts` and `.mjs` support recently - [check here for the PR and usage tips](https://github.com/netlify/netlify-lambda/pull/76).
+
+1. Install `@babel/preset-typescript`
+
+```bash
+npm install --save-dev @babel/preset-typescript
+```
+
+2. Create custom `.babelrc`.
+
+```diff
+{
+  "presets": [
+    "@babel/preset-typescript",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "6.10.3"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
+}
+```
 
 ### --static option
 
