@@ -139,7 +139,7 @@ The default webpack configuration uses `babel-loader` with a [few basic settings
 
 However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one. If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
 
-### How to use TypeScript
+### Use with TypeScript
 
 We added `.ts` and `.mjs` support recently - [check here for the PR and usage tips](https://github.com/netlify/netlify-lambda/pull/76).
 
@@ -149,7 +149,9 @@ We added `.ts` and `.mjs` support recently - [check here for the PR and usage ti
 npm install --save-dev @babel/preset-typescript
 ```
 
-2. Create custom `.babelrc`.
+You may also want to add `typescript @types/node @types/aws-lambda`.
+
+2. Create a custom `.babelrc` file:
 
 ```diff
 {
@@ -171,6 +173,8 @@ npm install --save-dev @babel/preset-typescript
   ]
 }
 ```
+
+3. (Optional) if you have `@types/aws-lambda` installed, your lambda functions can use the community typings for `Handler, Context, Callback`. See the typescript instructions in [create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/master/README.md#typescript) for an example.
 
 ### --static option
 
