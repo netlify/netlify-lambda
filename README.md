@@ -47,12 +47,16 @@ If this desribes your situation, then you need to proxy for local development. R
 
 ### Proxying for local development
 
+> ⚠️IMPORTANT! PLEASE READ THIS ESPECIALLY IF YOU HAVE CORS ISSUES⚠️
+
 When your function is deployed on Netlify, it will be available at `/.netlify/functions/function-name` for any given deploy context. It is advantageous to proxy the `netlify-lambda serve` development server to the same path on your primary development server.
 
 Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000. Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
 
-- See [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually).
-- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying)
+- If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually).
+- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter).
+- If you are using Next.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
+- If you are using with Angular CLI, see the instructions below.
 
 [Example webpack config](https://github.com/imorente/netlify-functions-example/blob/master/webpack.development.config):
 
@@ -72,7 +76,10 @@ module.exports = {
 
 The serving port can be changed with the `-p`/`--port` option.
 
-## Using with `Angular CLI`
+<details>
+  <summary>
+**Using with `Angular CLI`**
+  </summary>
 
 CORS issues when trying to use netlify-lambdas locally with angular? you need to set up a proxy.
 
@@ -116,6 +123,7 @@ To make your life easier you can add these to your `scripts` in `package.json`
 ```
 
 Obviously you need to run up `netlify-lambda` & `angular` at the same time.
+<details>
 
 ## Webpack Configuration
 
@@ -171,6 +179,8 @@ If you need an escape hatch and are building your lambda in some way that is inc
 ## Debugging
 
 To debug lambdas, prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) `npx --node-arg=--inspect netlify-lambda serve ...`. Additionally, (1) make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used) and (2) webpack's uglification is turned off with `optimization: { minimize: false }`. If using VSCode,  it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work.
+
+Don't forget to search our issues in case someone has run into a similar problem you have!
 
 ## Netlify Identity
 
