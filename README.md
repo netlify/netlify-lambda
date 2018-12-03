@@ -123,7 +123,7 @@ To make your life easier you can add these to your `scripts` in `package.json`
 ```
 
 Obviously you need to run up `netlify-lambda` & `angular` at the same time.
-<details>
+</details>
 
 ## Webpack Configuration
 
