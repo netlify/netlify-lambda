@@ -168,6 +168,10 @@ npm install --save-dev @babel/preset-typescript
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
 
+## Debugging
+
+To debug lambdas, prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) `npx --node-arg=--inspect netlify-lambda serve ...`. Additionally, (1) make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used) and (2) webpack's uglification is turned off with `optimization: { minimize: false }`. If using VSCode,  it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work.
+
 ## Netlify Identity
 
 Netlify Identity is [not supported at the moment](https://github.com/netlify/netlify-lambda/issues/51) inside `netlify-lambda` function emulation, but for now you can [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how they should work.
