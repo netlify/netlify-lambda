@@ -1,25 +1,23 @@
-## Netlify Lambda CLI
+## Netlify Lambda
 
-This is a small CLI tool that helps with building or serving lambdas built with a simple webpack/babel setup.
+This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/) with a simple webpack/babel build step.
 
-The goal is to make it easy to work with Lambda's with modern ES6 without being dependent on having the most state of the art node runtime available in the final deployment environment and with a build that can compile all modules into a single lambda file.
-
-Since v1.0.0 the dependencies were upgraded to Webpack 4 and Babel 7.
+The goal is to make it easy to write Lambda's with transpiled JS/Typescipt features and imported modules.
 
 ## Installation
 
 **We recommend installing locally** rather than globally: `yarn add -D netlify-lambda`. This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
 
+If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `Functions` field where the functions will be built to and served from.
+
 ## Usage
 
-Netlify lambda installs two commands:
+We expose two commands:
 
 ```
 netlify-lambda serve <folder>
 netlify-lambda build <folder>
 ```
-
-**IMPORTANT**: Both commands depend on a `netlify.toml` file being present in your project and configuring functions for deployment.
 
 The `serve` function will start a dev server and a file watcher for the specified folder and route requests to the relevant function at:
 
@@ -29,7 +27,13 @@ http://localhost:9000/hello -> folder/hello.js (must export a handler(event, con
 
 The `build` function will run a single build of the functions in the folder.
 
-There are additional options, introduced later:
+**IMPORTANT**: 
+
+- You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `Functions` field.
+- Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function.
+- Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
+
+There are additional CLI options, introduced below:
 ```bash
 -h --help
 -c --config
@@ -56,6 +60,7 @@ Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on p
 - If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually).
 - If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter).
 - If you are using Next.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
+- If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
 - If you are using with Angular CLI, see the instructions below.
 
 [Example webpack config](https://github.com/imorente/netlify-functions-example/blob/master/webpack.development.config):
@@ -176,6 +181,8 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 
 3. (Optional) if you have `@types/aws-lambda` installed, your lambda functions can use the community typings for `Handler, Context, Callback`. See the typescript instructions in [create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/master/README.md#typescript) for an example.
 
+Check https://github.com/sw-yx/create-react-app-lambda-typescript for a CRA + Lambda full Typescript experience.
+
 ### --static option
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
@@ -195,13 +202,29 @@ Don't forget to search our issues in case someone has run into a similar problem
 
 Netlify Identity is [not supported at the moment](https://github.com/netlify/netlify-lambda/issues/51) inside `netlify-lambda` function emulation, but for now you can [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how they should work.
 
+## Example functions and Tutorials
+
+You can do a great deal with lambda functions! Here are some examples for inspiration:
+
+- Basic Netlify Functions tutorial: https://flaviocopes.com/netlify-functions/
+- Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions))
+- Slack Notifications: https://css-tricks.com/forms-auth-and-serverless-functions-on-gatsby-and-netlify/#article-header-id-9
+- URL Shortener: https://www.netlify.com/blog/2018/03/19/create-your-own-url-shortener-with-netlifys-forms-and-functions/
+- [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
+
+These libraries pair very well for extending your functions capability:
+
+- Middleware: https://github.com/middyjs/middy
+- GraphQL: https://www.npmjs.com/package/apollo-server-lambda
+- [Any others to suggest?](https://github.com/netlify/netlify-lambda/issues/new)
+
 ## Other community approaches
 
 If you wish to serve the full website from lambda, [check this issue](https://github.com/netlify/netlify-lambda/issues/36).
 
 If you wish to run this server for testing, [check this issue](https://github.com/netlify/netlify-lambda/issues/49).
 
-If you wish to emulate more Netlify functionality locally, [check this repo](https://github.com/8eecf0d2/netlify-local).
+If you wish to emulate more Netlify functionality locally, check this repo: https://github.com/8eecf0d2/netlify-local. We are considering merging the projects [here](https://github.com/netlify/netlify-lambda/issues/75).
 
 All of the above are community maintained and not officially supported by Netlify.
 
