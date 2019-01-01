@@ -58,7 +58,7 @@ When your function is deployed on Netlify, it will be available at `/.netlify/fu
 Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000. Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
 
 - If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually).
-- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter).
+- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter), and here is an accompanying blogpost: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/).
 - If you are using Next.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
 - If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
 - If you are using with Angular CLI, see the instructions below.
@@ -210,6 +210,7 @@ You can do a great deal with lambda functions! Here are some examples for inspir
 - Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions))
 - Slack Notifications: https://css-tricks.com/forms-auth-and-serverless-functions-on-gatsby-and-netlify/#article-header-id-9
 - URL Shortener: https://www.netlify.com/blog/2018/03/19/create-your-own-url-shortener-with-netlifys-forms-and-functions/
+- Gatsby + Netlify Identity + Functions: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/)
 - [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
 
 These libraries pair very well for extending your functions capability:
