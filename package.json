@@ -8,7 +8,7 @@
     "netlify-lambda": "bin/cmd.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Mathias Biilmann Christensen",
   "license": "MIT",
@@ -33,5 +33,8 @@
     "toml": "^2.3.3",
     "webpack": "^4.17.1",
     "webpack-merge": "^4.1.4"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }
