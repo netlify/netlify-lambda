@@ -8,7 +8,7 @@ The goal is to make it easy to write Lambda's with transpiled JS/Typescipt featu
 
 **We recommend installing locally** rather than globally: `yarn add -D netlify-lambda`. This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
 
-If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `Functions` field where the functions will be built to and served from.
+If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from.
 
 ## Usage
 
@@ -29,7 +29,7 @@ The `build` function will run a single build of the functions in the folder.
 
 **IMPORTANT**: 
 
-- You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `Functions` field.
+- You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `functions` field.
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function.
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
 
