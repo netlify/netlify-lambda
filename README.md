@@ -33,27 +33,23 @@ netlify-lambda serve <folder>
 netlify-lambda build <folder>
 ```
 
-The `serve` function will start a dev server and a file watcher for the specified folder and route requests to the relevant function at:
-
-```
-http://localhost:9000/hello -> folder/hello.js (must export a handler(event, context callback) function)
-```
+At a high level, `netlify-lambda` takes a source folder (e.g. `src/lambda`, specified in your command) and outputs it to a built folder, (e.g. `built-lambda`, specified in your `netlify.toml` file).
 
 The `build` function will run a single build of the functions in the folder.
+
+The `serve` function will start a dev server for the source folder and route requests with a `.netlify/functions/` prefix, with a default port of `9000`:
+
+```
+folder/hello.js -> http://localhost:9000/.netlify/functions/hello
+```
+
+It also watches your files and restarts the dev server on change. Note: if you add a new file you should kill and restart the process to pick up the new file.
 
 **IMPORTANT**: 
 
 - You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `functions` field.
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function.
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
-
-There are additional CLI options, introduced below:
-```bash
--h --help
--c --config
--p --port
--s --static
-```
 
 ## Using with `create-react-app`, Gatsby, and other development servers
 
@@ -92,8 +88,6 @@ module.exports = {
   }
 };
 ```
-
-The serving port can be changed with the `-p`/`--port` option.
 
 <details>
   <summary>
@@ -197,6 +191,21 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 
 Check https://github.com/sw-yx/create-react-app-lambda-typescript for a CRA + Lambda full Typescript experience.
 
+## CLI flags/options
+
+There are additional CLI options:
+
+```bash
+-h --help
+-c --config
+-p --port
+-s --static
+```
+
+### --port option
+
+The serving port can be changed with the `-p`/`--port` option.
+
 ### --static option
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
@@ -225,6 +234,8 @@ You can do a great deal with lambda functions! Here are some examples for inspir
 - Slack Notifications: https://css-tricks.com/forms-auth-and-serverless-functions-on-gatsby-and-netlify/#article-header-id-9
 - URL Shortener: https://www.netlify.com/blog/2018/03/19/create-your-own-url-shortener-with-netlifys-forms-and-functions/
 - Gatsby + Netlify Identity + Functions: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/)
+- Raymond Camden's [Adding Serverless Functions to Your Netlify Static Site](https://www.raymondcamden.com/2019/01/08/adding-serverless-functions-to-your-netlify-static-site)
+- Travis Horn's [Netlify Lambda Functions from Scratch](https://travishorn.com/netlify-lambda-functions-from-scratch-1186f61c659e)
 - [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
 
 These libraries pair very well for extending your functions capability:
