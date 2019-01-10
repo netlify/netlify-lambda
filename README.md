@@ -6,9 +6,23 @@ The goal is to make it easy to write Lambda's with transpiled JS/Typescipt featu
 
 ## Installation
 
-**We recommend installing locally** rather than globally: `yarn add -D netlify-lambda`. This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
+**We recommend installing locally** rather than globally: 
 
-If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from.
+```bash
+yarn add -D netlify-lambda
+```
+
+This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
+
+If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from, e.g. 
+
+```toml
+# example netlify.toml
+[build]
+  command = "yarn build"
+  functions = "lambda" #  netlify-lambda reads this
+  publish = "build"
+```
 
 ## Usage
 
