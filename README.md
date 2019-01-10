@@ -72,35 +72,25 @@ exports.handler = function(event, context, callback) {
   or you can use async/await:
   
   ```js
-  import fetch from 'node-fetch';
 export async function handler(event, context) {
-  try {
-    const response = await fetch('https://api.chucknorris.io/jokes/random');
-    if (!response.ok) {
-      // NOT res.status >= 200 && res.status < 300
-      return { statusCode: response.status, body: response.statusText };
-    }
-    const data = await response.json();
-
     return {
       statusCode: 200,
-      body: JSON.stringify({ msg: data.value })
+      body: JSON.stringify({ message: `Hello world ${Math.floor(Math.random() * 10)}` })
     };
-  } catch (err) {
-    console.log(err); // output to netlify function log
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ msg: err.message }) // Could be a custom message or object i.e. JSON.stringify(err)
-    };
-  }
 }
   ```
   
-  `async/await` is nicer :) just return an object
+  For more Functions examples, check:
+  
+  - https://functions-playground.netlify.com/ (introductory)
+  - https://functions.netlify.com/examples/ (our firehose of all functions examples)
+  - the blogposts at the bottom of this README
   
   </details>
 
 ## Using with `create-react-app`, Gatsby, and other development servers
+
+### Why you need to proxy (for beginners)
 
 `react-scripts` (the underlying library for `create-react-app`) and other popular development servers often set up catchall serving for you; in other words, if you try to request a route that doesn't exist, the dev server will try to serve you `/index.html`. This is problematic when you are trying to hit a local API endpoint like `netlify-lambda` sets up for you - your browser will attempt to parse the `index.html` file as JSON. This is why you may see this error:
 
@@ -140,7 +130,7 @@ module.exports = {
 
 <details>
   <summary>
-**Using with `Angular CLI`**
+    <b>Using with `Angular CLI`</b>
   </summary>
 
 CORS issues when trying to use netlify-lambdas locally with angular? you need to set up a proxy.
@@ -221,14 +211,7 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 {
   "presets": [
     "@babel/preset-typescript",
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "6.10.3"
-        }
-      }
-    ]
+    "@babel/preset-env"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
@@ -285,7 +268,7 @@ Minor note: For the `identity` field, since we are not fully emulating Netlify I
 You can do a great deal with lambda functions! Here are some examples for inspiration:
 
 - Basic Netlify Functions tutorial: https://flaviocopes.com/netlify-functions/
-- Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions))
+- Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions) as well as our full list https://functions.netlify.com/examples/)
 - Slack Notifications: https://css-tricks.com/forms-auth-and-serverless-functions-on-gatsby-and-netlify/#article-header-id-9
 - URL Shortener: https://www.netlify.com/blog/2018/03/19/create-your-own-url-shortener-with-netlifys-forms-and-functions/
 - Gatsby + Netlify Identity + Functions: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/)
@@ -308,6 +291,12 @@ If you wish to run this server for testing, [check this issue](https://github.co
 If you wish to emulate more Netlify functionality locally, check this repo: https://github.com/8eecf0d2/netlify-local. We are considering merging the projects [here](https://github.com/netlify/netlify-lambda/issues/75).
 
 All of the above are community maintained and not officially supported by Netlify.
+
+## Changelog
+
+- v1.0: https://twitter.com/Netlify/status/1050399820484087815 Webpack 4 and Babel 7
+- v1.1: https://twitter.com/swyx/status/1069544181259849729 Typescript support
+- v1.2: https://twitter.com/swyx/status/1083446733374337024 Identity emulation (& others)
 
 ## License
 
