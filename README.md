@@ -6,7 +6,7 @@ The goal is to make it easy to write Lambda's with transpiled JS/Typescipt featu
 
 ## Installation
 
-**We recommend installing locally** rather than globally: 
+**We recommend installing locally** rather than globally:
 
 ```bash
 yarn add -D netlify-lambda
@@ -14,7 +14,7 @@ yarn add -D netlify-lambda
 
 This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
 
-If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from, e.g. 
+If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from, e.g.
 
 ```toml
 # example netlify.toml
@@ -45,11 +45,21 @@ folder/hello.js -> http://localhost:9000/.netlify/functions/hello
 
 It also watches your files and restarts the dev server on change. Note: if you add a new file you should kill and restart the process to pick up the new file.
 
-**IMPORTANT**: 
+**IMPORTANT**:
 
 - You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `functions` field.
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function.
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
+
+<details>
+<summary><b>Environment variables in build and branch contextx</b>
+
+Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).
+`netlify-lambda` should respect the env variables you supply in `netlify.toml` accordingly (except for deploy previews, which make no sense to locally emulate).
+
+However, this is a [relatively new feature](https://github.com/netlify/netlify-lambda/issues/59), so if you encounter issues, file one.
+
+</details>
 
 ## Using with `create-react-app`, Gatsby, and other development servers
 
@@ -67,7 +77,7 @@ When your function is deployed on Netlify, it will be available at `/.netlify/fu
 
 Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000. Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
 
-- If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually). You can also learn how to do this from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI 
+- If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually). You can also learn how to do this from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
 - If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter), and here is an accompanying blogpost: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/).
 - If you are using Next.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
 - If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
@@ -77,12 +87,12 @@ Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on p
 
 ```js
 module.exports = {
-  mode: "development",
+  mode: 'development',
   devServer: {
     proxy: {
-      "/.netlify": {
-        target: "http://localhost:9000",
-        pathRewrite: { "^/.netlify/functions": "" }
+      '/.netlify': {
+        target: 'http://localhost:9000',
+        pathRewrite: { '^/.netlify/functions': '' }
       }
     }
   }
@@ -99,7 +109,7 @@ CORS issues when trying to use netlify-lambdas locally with angular? you need to
 Firstly make sure you are using relative paths in your app to ensure that your app will work locally and on Netlify, example below...
 
 ```js
-  this.http.get('/.netlify/functions/jokeTypescript')
+this.http.get('/.netlify/functions/jokeTypescript');
 ```
 
 Then place a `proxy.config.json` file in the root of your project, the contents should look something like...
@@ -136,6 +146,7 @@ To make your life easier you can add these to your `scripts` in `package.json`
 ```
 
 Obviously you need to run up `netlify-lambda` & `angular` at the same time.
+
 </details>
 
 ## Webpack Configuration
@@ -204,6 +215,10 @@ There are additional CLI options:
 -s --static
 ```
 
+### --config option
+
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
+
 ### --port option
 
 The serving port can be changed with the `-p`/`--port` option.
@@ -212,17 +227,6 @@ The serving port can be changed with the `-p`/`--port` option.
 
 If you need an escape hatch and are building your lambda in some way that is incompatible with our build process, you can skip the build with the `-s` or `--static` flag. [More info here](https://github.com/netlify/netlify-lambda/pull/62).
 
-## Debugging
-
-To debug lambdas, prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) `npx --node-arg=--inspect netlify-lambda serve ...`. Additionally:
-
-1. make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used) 
-2. webpack's uglification is turned off with `optimization: { minimize: false }`. If using VSCode,  it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work.
-
-Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
-
-Don't forget to search our issues in case someone has run into a similar problem you have!
-
 ## Netlify Identity
 
 Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how Netlify Functions and Netlify Identity work together. Basically you have to make your request with an `authorization` header and a `Bearer` token with your Netlify Identity JWT supplied. You can get this JWT from any of our Identity solutions from [gotrue-js](https://github.com/netlify/gotrue-js) to [netlify-identity-widget](https://github.com/netlify/netlify-identity-widget).
@@ -230,6 +234,17 @@ Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-an
 Since for practical purposes we cannot fully emulate Netlify Identity locally, we provide [simple JWT decoding inside the `context` of your function](https://github.com/netlify/netlify-lambda/pull/57). This will give you back the `user` info you need to work with.
 
 Minor note: For the `identity` field, since we are not fully emulating Netlify Identity, we can't give you details on the Identity instance, so we give you [unambiguous strings](https://github.com/netlify/netlify-lambda/blob/master/lib/serve.js#L87) so you know not to rely on it locally: `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_URL` and `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_TOKEN`. In production, of course, Netlify Functions will give you the correct `identity.url` and `identity.token` fields. We find we dont use this info often in our functions so it is not that big of a deal in our judgment.
+
+## Debugging
+
+To debug lambdas, prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) `npx --node-arg=--inspect netlify-lambda serve ...`. Additionally:
+
+1. make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used)
+2. webpack's uglification is turned off with `optimization: { minimize: false }`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work.
+
+Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
+
+Don't forget to search our issues in case someone has run into a similar problem you have!
 
 ## Example functions and Tutorials
 
