@@ -150,7 +150,9 @@ The additional webpack config will be merged into the default config via [webpac
 
 The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
 
-However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, it will be used instead of the default one. If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
+However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, or [folders above it](https://github.com/netlify/netlify-lambda/pull/92) (useful for monorepos), it will be used instead of the default one.
+
+If you need to run different babel versions for your lambda and for your app, [check this issue](https://github.com/netlify/netlify-lambda/issues/34) to override your webpack babel-loader.
 
 ### Use with TypeScript
 
@@ -223,7 +225,11 @@ Don't forget to search our issues in case someone has run into a similar problem
 
 ## Netlify Identity
 
-Netlify Identity is [not supported at the moment](https://github.com/netlify/netlify-lambda/issues/51) inside `netlify-lambda` function emulation, but for now you can [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how they should work.
+Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how Netlify Functions and Netlify Identity work together. Basically you have to make your request with an `authorization` header and a `Bearer` token with your Netlify Identity JWT supplied. You can get this JWT from any of our Identity solutions from [gotrue-js](https://github.com/netlify/gotrue-js) to [netlify-identity-widget](https://github.com/netlify/netlify-identity-widget).
+
+Since for practical purposes we cannot fully emulate Netlify Identity locally, we provide [simple JWT decoding inside the `context` of your function](https://github.com/netlify/netlify-lambda/pull/57). This will give you back the `user` info you need to work with.
+
+Minor note: For the `identity` field, since we are not fully emulating Netlify Identity, we can't give you details on the Identity instance, so we give you [unambiguous strings](https://github.com/netlify/netlify-lambda/blob/master/lib/serve.js#L87) so you know not to rely on it locally: `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_URL` and `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_TOKEN`. In production, of course, Netlify Functions will give you the correct `identity.url` and `identity.token` fields. We find we dont use this info often in our functions so it is not that big of a deal in our judgment.
 
 ## Example functions and Tutorials
 
