@@ -51,6 +51,55 @@ It also watches your files and restarts the dev server on change. Note: if you a
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function.
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
 
+<details>
+  <summary>
+    <b>Lambda function examples</b>
+  </summary>
+  If you are new to writing Lambda functions, this section may help you. Function signatures should conform to one of either two styles. Traditional callback style:
+  
+  ```js
+exports.handler = function(event, context, callback) {
+  // your server-side functionality
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Hello world ${Math.floor(Math.random() * 10)}`
+    })
+  });
+};
+  ```
+  
+  or you can use async/await:
+  
+  ```js
+  import fetch from 'node-fetch';
+export async function handler(event, context) {
+  try {
+    const response = await fetch('https://api.chucknorris.io/jokes/random');
+    if (!response.ok) {
+      // NOT res.status >= 200 && res.status < 300
+      return { statusCode: response.status, body: response.statusText };
+    }
+    const data = await response.json();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ msg: data.value })
+    };
+  } catch (err) {
+    console.log(err); // output to netlify function log
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ msg: err.message }) // Could be a custom message or object i.e. JSON.stringify(err)
+    };
+  }
+}
+  ```
+  
+  `async/await` is nicer :) just return an object
+  
+  </details>
+
 ## Using with `create-react-app`, Gatsby, and other development servers
 
 `react-scripts` (the underlying library for `create-react-app`) and other popular development servers often set up catchall serving for you; in other words, if you try to request a route that doesn't exist, the dev server will try to serve you `/index.html`. This is problematic when you are trying to hit a local API endpoint like `netlify-lambda` sets up for you - your browser will attempt to parse the `index.html` file as JSON. This is why you may see this error:
