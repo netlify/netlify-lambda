@@ -58,4 +58,21 @@ program
       });
   });
 
+// error on unknown commands
+// ref: https://github.com/tj/commander.js#custom-event-listeners
+program
+  .on('command:*', function () {
+    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
+    process.exit(1);
+  });
+
 program.parse(process.argv);
+
+// check if no command line args are provided
+// ref: https://github.com/tj/commander.js/issues/7#issuecomment-32448653
+var NO_COMMAND_SPECIFIED = program.args.length === 0;
+
+if (NO_COMMAND_SPECIFIED) {
+  // user did not supply args, so show --help
+  program.help();
+}
