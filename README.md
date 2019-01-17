@@ -274,6 +274,7 @@ You can do a great deal with lambda functions! Here are some examples for inspir
 - Gatsby + Netlify Identity + Functions: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/)
 - Raymond Camden's [Adding Serverless Functions to Your Netlify Static Site](https://www.raymondcamden.com/2019/01/08/adding-serverless-functions-to-your-netlify-static-site)
 - Travis Horn's [Netlify Lambda Functions from Scratch](https://travishorn.com/netlify-lambda-functions-from-scratch-1186f61c659e)
+- [JAMstack with Divya Sasidharan & Phil Hawksworth | Devchat.tv](https://devchat.tv/js-jabber/jsj-347-jamstack-with-divya-sasidharan-phil-hawksworth/) - Great discussion on the problems that Netlify Functions solve
 - [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
 
 These libraries pair very well for extending your functions capability:
