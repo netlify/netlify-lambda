@@ -2,7 +2,7 @@
 
 This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/) with a simple webpack/babel build step.
 
-The goal is to make it easy to write Lambda's with transpiled JS/Typescipt features and imported modules.
+The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
 
 ## Installation
 
@@ -52,6 +52,7 @@ It also watches your files and restarts the dev server on change. Note: if you a
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
 
 <details>
+<<<<<<< HEAD
 <summary><b>Environment variables in build and branch contextx</b>
 
 Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).
@@ -60,8 +61,47 @@ Read Netlify's [documentation on environment variables](https://www.netlify.com/
 However, this is a [relatively new feature](https://github.com/netlify/netlify-lambda/issues/59), so if you encounter issues, file one.
 
 </details>
+=======
+  <summary>
+    <b>Lambda function examples</b>
+  </summary>
+  If you are new to writing Lambda functions, this section may help you. Function signatures should conform to one of either two styles. Traditional callback style:
+  
+  ```js
+exports.handler = function(event, context, callback) {
+  // your server-side functionality
+  callback(null, {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Hello world ${Math.floor(Math.random() * 10)}`
+    })
+  });
+};
+  ```
+  
+  or you can use async/await:
+  
+  ```js
+export async function handler(event, context) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: `Hello world ${Math.floor(Math.random() * 10)}` })
+    };
+}
+  ```
+  
+  For more Functions examples, check:
+  
+  - https://functions-playground.netlify.com/ (introductory)
+  - https://functions.netlify.com/examples/ (our firehose of all functions examples)
+  - the blogposts at the bottom of this README
+  
+  </details>
+>>>>>>> 46ea7abde5366413e079e9efb34655c40226e323
 
 ## Using with `create-react-app`, Gatsby, and other development servers
+
+### Why you need to proxy (for beginners)
 
 `react-scripts` (the underlying library for `create-react-app`) and other popular development servers often set up catchall serving for you; in other words, if you try to request a route that doesn't exist, the dev server will try to serve you `/index.html`. This is problematic when you are trying to hit a local API endpoint like `netlify-lambda` sets up for you - your browser will attempt to parse the `index.html` file as JSON. This is why you may see this error:
 
@@ -101,7 +141,7 @@ module.exports = {
 
 <details>
   <summary>
-**Using with `Angular CLI`**
+    <b>Using with `Angular CLI`</b>
   </summary>
 
 CORS issues when trying to use netlify-lambdas locally with angular? you need to set up a proxy.
@@ -183,14 +223,7 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 {
   "presets": [
     "@babel/preset-typescript",
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "6.10.3"
-        }
-      }
-    ]
+    "@babel/preset-env"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
@@ -251,12 +284,13 @@ Don't forget to search our issues in case someone has run into a similar problem
 You can do a great deal with lambda functions! Here are some examples for inspiration:
 
 - Basic Netlify Functions tutorial: https://flaviocopes.com/netlify-functions/
-- Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions))
+- Netlify's list of Function examples: https://functions-playground.netlify.com/ ([Even more in the README](https://github.com/netlify/functions) as well as our full list https://functions.netlify.com/examples/)
 - Slack Notifications: https://css-tricks.com/forms-auth-and-serverless-functions-on-gatsby-and-netlify/#article-header-id-9
 - URL Shortener: https://www.netlify.com/blog/2018/03/19/create-your-own-url-shortener-with-netlifys-forms-and-functions/
 - Gatsby + Netlify Identity + Functions: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/)
 - Raymond Camden's [Adding Serverless Functions to Your Netlify Static Site](https://www.raymondcamden.com/2019/01/08/adding-serverless-functions-to-your-netlify-static-site)
 - Travis Horn's [Netlify Lambda Functions from Scratch](https://travishorn.com/netlify-lambda-functions-from-scratch-1186f61c659e)
+- [JAMstack with Divya Sasidharan & Phil Hawksworth | Devchat.tv](https://devchat.tv/js-jabber/jsj-347-jamstack-with-divya-sasidharan-phil-hawksworth/) - Great discussion on the problems that Netlify Functions solve
 - [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
 
 These libraries pair very well for extending your functions capability:
@@ -274,6 +308,12 @@ If you wish to run this server for testing, [check this issue](https://github.co
 If you wish to emulate more Netlify functionality locally, check this repo: https://github.com/8eecf0d2/netlify-local. We are considering merging the projects [here](https://github.com/netlify/netlify-lambda/issues/75).
 
 All of the above are community maintained and not officially supported by Netlify.
+
+## Changelog
+
+- v1.0: https://twitter.com/Netlify/status/1050399820484087815 Webpack 4 and Babel 7
+- v1.1: https://twitter.com/swyx/status/1069544181259849729 Typescript support
+- v1.2: https://twitter.com/swyx/status/1083446733374337024 Identity emulation (& others)
 
 ## License
 
