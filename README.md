@@ -52,7 +52,6 @@ It also watches your files and restarts the dev server on change. Note: if you a
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
 
 <details>
-<<<<<<< HEAD
 <summary><b>Environment variables in build and branch contextx</b>
 
 Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).
@@ -61,7 +60,6 @@ Read Netlify's [documentation on environment variables](https://www.netlify.com/
 However, this is a [relatively new feature](https://github.com/netlify/netlify-lambda/issues/59), so if you encounter issues, file one.
 
 </details>
-=======
   <summary>
     <b>Lambda function examples</b>
   </summary>
@@ -97,7 +95,6 @@ export async function handler(event, context) {
   - the blogposts at the bottom of this README
   
   </details>
->>>>>>> 46ea7abde5366413e079e9efb34655c40226e323
 
 ## Using with `create-react-app`, Gatsby, and other development servers
 
