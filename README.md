@@ -311,6 +311,7 @@ All of the above are community maintained and not officially supported by Netlif
 - v1.0: https://twitter.com/Netlify/status/1050399820484087815 Webpack 4 and Babel 7
 - v1.1: https://twitter.com/swyx/status/1069544181259849729 Typescript support
 - v1.2: https://twitter.com/swyx/status/1083446733374337024 Identity emulation (& others)
+- v1.3: https://github.com/netlify/netlify-lambda/releases/tag/v1.3.0
 
 ## License
 
