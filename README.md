@@ -190,7 +190,19 @@ Obviously you need to run up `netlify-lambda` & `angular` at the same time.
 
 By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
 
-If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`. See this issue for an example of [how to write a webpack override file](https://github.com/netlify/netlify-lambda/issues/64).
+If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
+
+For example, have a file with:
+
+
+```js
+// webpack.functions.js 
+module.exports = {
+  optimization: { minimize: false }
+};
+```
+
+Then specify `netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
 
@@ -249,6 +261,18 @@ There are additional CLI options:
 
 If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
+For example, have a file with:
+
+
+```js
+// webpack.functions.js 
+module.exports = {
+  optimization: { minimize: false }
+};
+```
+
+Then specify `netlify-lambda serve --config ./webpack.functions.js`. 
+
 ### --port option
 
 The serving port can be changed with the `-p`/`--port` option.
@@ -270,7 +294,19 @@ Minor note: For the `identity` field, since we are not fully emulating Netlify I
 To debug lambdas, you can use the `--inspect` flag. Additionally:
 
 1. make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used)
-2. webpack's minification/uglification is turned off with `optimization: { minimize: false }`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
+2. webpack's minification/uglification is turned off (see below):
+
+For example, have a file with:
+
+
+```js
+// webpack.functions.js 
+module.exports = {
+  optimization: { minimize: false }
+};
+```
+
+Then specify `netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
 Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
 
