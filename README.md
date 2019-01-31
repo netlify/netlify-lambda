@@ -288,6 +288,7 @@ You can do a great deal with lambda functions! Here are some examples for inspir
 - Raymond Camden's [Adding Serverless Functions to Your Netlify Static Site](https://www.raymondcamden.com/2019/01/08/adding-serverless-functions-to-your-netlify-static-site)
 - Travis Horn's [Netlify Lambda Functions from Scratch](https://travishorn.com/netlify-lambda-functions-from-scratch-1186f61c659e)
 - [JAMstack with Divya Sasidharan & Phil Hawksworth | Devchat.tv](https://devchat.tv/js-jabber/jsj-347-jamstack-with-divya-sasidharan-phil-hawksworth/) - Great discussion on the problems that Netlify Functions solve
+- [Netlify function error reporting with Sentry](https://httptoolkit.tech/blog/netlify-function-error-reporting-with-sentry/) - automatic error reporting for your Netlify functions, so you know any time they fail.
 - [**Submit your blogpost here!**](https://github.com/netlify/netlify-lambda/issues/new)
 
 These libraries pair very well for extending your functions capability:
