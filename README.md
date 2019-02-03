@@ -4,6 +4,10 @@ This is an optional tool that helps with building or locally developing [Netlify
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
 
+## Alternative to Netlify Lambda
+
+Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach. Read [here](https://www.netlify.com/blog/2018/09/14/forms-and-functions/) and [here for instructions](https://github.com/DavidWells/function-zips/) (more examples [here](https://github.com/netlify/function-bundling-example)) and  and look out for more announcements on this in coming months.
+
 ## Installation
 
 **We recommend installing locally** rather than globally:
