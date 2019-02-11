@@ -66,14 +66,18 @@ It also watches your files and restarts the dev server on change. Note: if you a
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
 
 <details>
-<summary><b>Environment variables in build and branch context</b>
+  <summary><b>Environment variables in build and branch context</b></summary>
 
 Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).
 `netlify-lambda` should respect the env variables you supply in `netlify.toml` accordingly (except for deploy previews, which make no sense to locally emulate).
 
 However, this is a [relatively new feature](https://github.com/netlify/netlify-lambda/issues/59), so if you encounter issues, file one.
 
+If you need local-only environment variables that you don't place in `netlify.toml` for security reasons, you can configure webpack to use a `.env` file [like in this example](https://github.com/netlify/netlify-lambda/issues/118).
+
 </details>
+
+
   <summary>
     <b>Lambda function examples</b>
   </summary>
