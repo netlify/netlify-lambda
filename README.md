@@ -4,9 +4,19 @@ This is an optional tool that helps with building or locally developing [Netlify
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
 
-## Alternative to Netlify Lambda
+## New Alternative to Netlify Lambda
 
-Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach. Read [here](https://www.netlify.com/blog/2018/09/14/forms-and-functions/) and [here for instructions](https://github.com/DavidWells/function-zips/) (more examples [here](https://github.com/netlify/function-bundling-example)) and  and look out for more announcements on this in coming months.
+Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach. 
+
+We have recently soft released a new library to do this for you: https://github.com/netlify/zip-it-and-ship-it. This is integrated into the Netlify CLI. There is [more documentation here](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys) in the official CLI docs and support is available through [our regular channels](https://www.netlify.com/support/).
+
+<details>
+  <summary><b>DIY zipping</b></summary>
+  
+  Read [here](https://www.netlify.com/blog/2018/09/14/forms-and-functions/) and [here for instructions](https://github.com/DavidWells/function-zips/) (more examples [here](https://github.com/netlify/function-bundling-example))
+  </details>
+  
+Look out for more announcements on this in coming months.
 
 ## Installation
 
