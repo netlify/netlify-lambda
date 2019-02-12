@@ -6,7 +6,7 @@ The goal is to make it easy to write Lambda's with transpiled JS/TypeScript feat
 
 ## New Alternative to Netlify Lambda
 
-Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach. 
+Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach.
 
 We have recently soft released a new library to do this for you: https://github.com/netlify/zip-it-and-ship-it. This is integrated into the Netlify CLI. There is [more documentation here](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys) in the official CLI docs and support is available through [our regular channels](https://www.netlify.com/support/).
 
@@ -64,6 +64,7 @@ It also watches your files and restarts the dev server on change. Note: if you a
 - You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `functions` field.
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function. Files that end with `.spec.*` or `.test.*` will be ignored so you can [colocate your tests](https://github.com/netlify/netlify-lambda/issues/99).
 - Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
+- Functions [time out in 10 seconds](https://www.netlify.com/docs/functions/#custom-deployment-options) by default although extensions can be requested. We [try to replicate this locally](https://github.com/netlify/netlify-lambda/pull/116).
 
 <details>
   <summary><b>Environment variables in build and branch context</b></summary>
@@ -76,7 +77,6 @@ However, this is a [relatively new feature](https://github.com/netlify/netlify-l
 If you need local-only environment variables that you don't place in `netlify.toml` for security reasons, you can configure webpack to use a `.env` file [like in this example](https://github.com/netlify/netlify-lambda/issues/118).
 
 </details>
-
 
   <summary>
     <b>Lambda function examples</b>
@@ -116,13 +116,16 @@ export async function handler(event, context) {
 
 ## Using with `create-react-app`, Gatsby, and other development servers
 
-### Why you need to proxy (for beginners)
+<details>
+<summary><b>Why you need to proxy (for beginners)</b></summary>
 
 `react-scripts` (the underlying library for `create-react-app`) and other popular development servers often set up catchall serving for you; in other words, if you try to request a route that doesn't exist, the dev server will try to serve you `/index.html`. This is problematic when you are trying to hit a local API endpoint like `netlify-lambda` sets up for you - your browser will attempt to parse the `index.html` file as JSON. This is why you may see this error:
 
 `Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0`
 
 If this desribes your situation, then you need to proxy for local development. Read on. Don't worry it's easier than it looks.
+
+</details>
 
 ### Proxying for local development
 
@@ -212,9 +215,8 @@ If you need to use additional webpack modules or loaders, you can specify an add
 
 For example, have a file with:
 
-
 ```js
-// webpack.functions.js 
+// webpack.functions.js
 module.exports = {
   optimization: { minimize: false }
 };
@@ -273,6 +275,7 @@ There are additional CLI options:
 -c --config
 -p --port
 -s --static
+-t --timeout
 ```
 
 ### --config option
@@ -281,15 +284,18 @@ If you need to use additional webpack modules or loaders, you can specify an add
 
 For example, have a file with:
 
-
 ```js
-// webpack.functions.js 
+// webpack.functions.js
 module.exports = {
   optimization: { minimize: false }
 };
 ```
 
-Then specify `netlify-lambda serve --config ./webpack.functions.js`. 
+Then specify `netlify-lambda serve --config ./webpack.functions.js`.
+
+### --timeout option
+
+(This is for local dev/serving only) The default function timeout is 10 seconds. If you need to adjust this because you have requested extra timeout, pass a timeout number here. Thanks to [@naipath](https://github.com/netlify/netlify-lambda/pull/116) for this feature.
 
 ### --port option
 
@@ -316,9 +322,8 @@ To debug lambdas, you can use the `--inspect` flag. Additionally:
 
 For example, have a file with:
 
-
 ```js
-// webpack.functions.js 
+// webpack.functions.js
 module.exports = {
   optimization: { minimize: false }
 };
@@ -327,6 +332,12 @@ module.exports = {
 Then specify `netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
 Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
+
+**Special warning on `node-fetch`**: `node-fetch` and webpack [currently don't work well together](https://github.com/bitinn/node-fetch/issues/450). you will have to use the default export in your code:
+
+```js
+cons fetch = require('node-fetch').default // not require('node-fetch')
+```
 
 Don't forget to search our issues in case someone has run into a similar problem you have!
 
@@ -367,6 +378,7 @@ All of the above are community maintained and not officially supported by Netlif
 - v1.1: https://twitter.com/swyx/status/1069544181259849729 Typescript support
 - v1.2: https://twitter.com/swyx/status/1083446733374337024 Identity emulation (& others)
 - v1.3: https://github.com/netlify/netlify-lambda/releases/tag/v1.3.0
+- v1.4: New timeout feature https://github.com/netlify/netlify-lambda/pull/116
 
 ## License
 
