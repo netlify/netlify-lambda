@@ -18,7 +18,8 @@ program.version(pkg.version);
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
-  .option("-s --static", "serve pre-built lambda files")
+  .option("-t --timeout <timeout>", "function invocation timeout in seconds (default: 10)")
+  .option("-s --static", "serve pre-built lambda files");
 
 program
   .command("serve <dir>")
@@ -26,8 +27,8 @@ program
   .action(function(cmd, options) {
     console.log("netlify-lambda: Starting server");
     var static = Boolean(program.static);
-    var server = serve.listen(program.port || 9000, static);
-    if (static) return // early terminate, don't build
+    var server = serve.listen(program.port || 9000, static, Number(program.timeout) || 10);
+    if (static) return; // early terminate, don't build
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
