@@ -6,7 +6,7 @@ The goal is to make it easy to write Lambda's with transpiled JS/TypeScript feat
 
 ## New Alternative to Netlify Lambda
 
-Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that dont expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach.
+Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach.
 
 We have recently integrated this functionality ([zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it)) into the Netlify CLI. Check the [documentation here](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys) in the official CLI docs and support is available through [our regular channels](https://www.netlify.com/support/). The current drawback of this approach is no ability to serve these zipped functions locally, although we are working on this.
 
