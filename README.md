@@ -137,7 +137,7 @@ Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on p
 
 - If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually). You can also learn how to do this from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
 - If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter), and here is an accompanying blogpost: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/).
-- If you are using Next.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
+- If you are using Nuxt.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
 - If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
 - If you are using with Angular CLI, see the instructions below.
 
@@ -159,7 +159,7 @@ module.exports = {
 
 <details>
   <summary>
-    <b>Using with `Angular CLI`</b>
+    <b>Using with <code>Angular CLI</code></b>
   </summary>
 
 CORS issues when trying to use netlify-lambdas locally with angular? you need to set up a proxy.
@@ -204,6 +204,93 @@ To make your life easier you can add these to your `scripts` in `package.json`
 ```
 
 Obviously you need to run up `netlify-lambda` & `angular` at the same time.
+
+</details>
+<details>
+  <summary>
+    <b>Using with <code>Next.js</code></b>
+  </summary>
+
+Next.js [doesnt use Webpack Dev Server](https://github.com/zeit/next.js/issues/2281), so you can't modify any config in `next.config.js` to get a proxy to run. However, since the CORS proxy issue only happens in dev mode (Functions are on the same domain when deployed on Netlify) you can run Next.js through a Node server for local development:
+
+```js
+touch server.js
+yarn add -D http-proxy-middleware express
+```
+
+```js
+// server.js
+/* eslint-disable no-console */
+const express = require('express');
+const next = require('next');
+
+const devProxy = {
+  '/.netlify': {
+    target: 'http://localhost:9000',
+    pathRewrite: { '^/.netlify/functions': '' }
+  }
+};
+
+const port = parseInt(process.env.PORT, 10) || 3000;
+const env = process.env.NODE_ENV;
+const dev = env !== 'production';
+const app = next({
+  dir: '.', // base directory where everything is, could move to src later
+  dev
+});
+
+const handle = app.getRequestHandler();
+
+let server;
+app
+  .prepare()
+  .then(() => {
+    server = express();
+
+    // Set up the proxy.
+    if (dev && devProxy) {
+      const proxyMiddleware = require('http-proxy-middleware');
+      Object.keys(devProxy).forEach(function(context) {
+        server.use(proxyMiddleware(context, devProxy[context]));
+      });
+    }
+
+    // Default catch-all handler to allow Next.js to handle all other routes
+    server.all('*', (req, res) => handle(req, res));
+
+    server.listen(port, err => {
+      if (err) {
+        throw err;
+      }
+      console.log(`> Ready on port ${port} [${env}]`);
+    });
+  })
+  .catch(err => {
+    console.log('An error occurred, unable to start the server');
+    console.log(err);
+  });
+
+```
+
+run your server and netlify-lambda at the same time:
+
+```js
+// package.json
+  "scripts": {
+    "start": "cross-env NODE_ENV=dev npm-run-all --parallel start:app start:server",
+    "start:app": "PORT=3000 node server.js",
+    "start:server": "netlify-lambda serve functions"
+  },
+```
+
+and now you can ping Netlify Functions with locally emulated by `netlify-lambda`!
+
+For production deployment, you have two options:
+
+- [using `next export` to do static HTML export](https://nextjs.org/docs/#static-html-export)
+- [using the Next.js 8 `serverless` target option](https://nextjs.org/blog/next-8/#serverless-nextjs) to run your site in a function as well.
+
+Just remember to configure your `netlify.toml` to point to the `Next.js` build folder and your `netlify-lambda` functions folder accordingly.
 
 </details>
 
