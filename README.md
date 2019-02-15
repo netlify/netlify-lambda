@@ -420,10 +420,10 @@ Then specify `netlify-lambda serve --config ./webpack.functions.js`. If using VS
 
 Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
 
-**Special warning on `node-fetch`**: `node-fetch` and webpack [currently don't work well together](https://github.com/bitinn/node-fetch/issues/450). you will have to use the default export in your code:
+**Special warning on `node-fetch`**: `node-fetch` and webpack [currently don't work well together](https://github.com/bitinn/node-fetch/issues/450). You will have to use the default export in your code:
 
 ```js
-cons fetch = require('node-fetch').default // not require('node-fetch')
+const fetch = require('node-fetch').default // not require('node-fetch')
 ```
 
 Don't forget to search our issues in case someone has run into a similar problem you have!
