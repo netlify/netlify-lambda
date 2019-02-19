@@ -137,6 +137,7 @@ Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on p
 
 - If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually). You can also learn how to do this from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
 - If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter), and here is an accompanying blogpost: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/).
+- If you are using React-Static, check https://github.com/nozzle/react-static/issues/380.
 - If you are using Nuxt.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
 - If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
 - If you are using with Angular CLI, see the instructions below.
