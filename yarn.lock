@@ -2190,6 +2190,13 @@ express-logging@^1.1.1:
   dependencies:
     on-headers "^1.0.0"
 
+express-static@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/express-static/-/express-static-1.2.6.tgz#567aab6ba808386936b8c17bb0a90f6f61d0db4f"
+  integrity sha512-pmp8fSe+bCxGCTk5+X6HzIF2APYMvrAq3Y7sT/WOELc0JZZxJhMTVgCbxcoUgMRBSqnQ9EfTw/Uv3J1ONoIAuA==
+  dependencies:
+    mime2 latest
+
 express@^4.16.3:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
@@ -3869,6 +3876,11 @@ mime-types@^2.1.12, mime-types@~2.1.18, mime-types@~2.1.19:
   integrity sha512-3iL6DbwpyLzjR3xHSFNFeb9Nz/M8WDkX33t1GFQnFOllWk8pOrh/LSrB5OXlnlW5P9LH73X6loW/eogc+F5lJg==
   dependencies:
     mime-db "~1.37.0"
+
+mime2@latest:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/mime2/-/mime2-0.0.9.tgz#507e3b3b370deb947c3b47a4ff544c33b7e1a4eb"
+  integrity sha512-19HM8Rpaqy7kEtupNI+XXUgh+dkPWQUpExLHVWntk6QySTUn0VKpn3kEe41K7DJh+wCYN1t93oak63jURqRW0A==
 
 mime@1.4.1:
   version "1.4.1"
