@@ -22,7 +22,7 @@ We have recently integrated this functionality ([zip-it-and-ship-it](https://git
 **We recommend installing locally** rather than globally:
 
 ```bash
-yarn add -D netlify-lambda
+yarn add netlify-lambda
 ```
 
 This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
