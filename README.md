@@ -4,14 +4,23 @@ This is an optional tool that helps with building or locally developing [Netlify
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
 
-## New Alternative to Netlify Lambda
+<details>
+  <summary><b>Multiple ways to deploy functions on Netlify</b></summary>
 
-Netlify-Lambda uses webpack to bundle up your functions and their dependencies for you, however this is not the only approach. If you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the zipping approach.
+There are 3 ways to deploy functions to Netlify:
 
-We have recently integrated this functionality ([zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it)) into the Netlify CLI. Check the [documentation here](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys) in the official CLI docs and support is available through [our regular channels](https://www.netlify.com/support/). The current drawback of this approach is no ability to serve these zipped functions locally, although we are working on this. An update on this will come [in April](https://jamstackconf.com/nyc/).
+1. each function as a single JS or Go file, possibly bundled by a build tool like `netlify-lambda` or `tsc`
+2. each function as a zip of a folder of files
+3. as of [CLI v2.7](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys), a non-bundled, non-zipped, folder of files.
+
+`Netlify-Lambda` uses webpack to bundle up your functions and their dependencies for you, suiting the first approach. However, if you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the other approaches.
+
+If this sounds confusing, support is available through [our regular channels](https://www.netlify.com/support/). An update on how this will be supported locally will come [in April](https://jamstackconf.com/nyc/). Importantly, **There will be no change to the workflow of existing `netlify-lambda` users.**
+
+</details>
 
 <details>
-  <summary><b>A bit information on manual zipping</b></summary>
+  <summary><b>A bit of information on manual zipping</b></summary>
   
  You can still zip up and deploy functions by yourself, as has always been the case with Netlify Functions. Read [here](https://www.netlify.com/blog/2018/09/14/forms-and-functions/) and [here for instructions](https://github.com/DavidWells/function-zips/) (more examples [here](https://github.com/netlify/function-bundling-example))
   </details>
