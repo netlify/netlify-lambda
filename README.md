@@ -19,13 +19,6 @@ If this sounds confusing, support is available through [our regular channels](ht
 
 </details>
 
-<details>
-  <summary><b>A bit of information on manual zipping</b></summary>
-  
- You can still zip up and deploy functions by yourself, as has always been the case with Netlify Functions. Read [here](https://www.netlify.com/blog/2018/09/14/forms-and-functions/) and [here for instructions](https://github.com/DavidWells/function-zips/) (more examples [here](https://github.com/netlify/function-bundling-example))
-  </details>
-
-
 ## Installation
 
 **We recommend installing locally** rather than globally:
