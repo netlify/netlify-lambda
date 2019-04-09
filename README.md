@@ -20,15 +20,11 @@ If this sounds confusing, support is available through [our regular channels](ht
 
 
 <details>
-  <summary><b>
-    
-    [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) vs. Netlify-Lambda
-    
-    </b></summary>
+  <summary><b>Netlify Dev vs. Netlify-Lambda</b></summary>
 
 Some headline notes:
 
-- **`netlify-lambda` is not deprecated and will continue to be supported.**
+- [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **`netlify-lambda` is not deprecated and is still recommended for some situations**, as explained below.
 - Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously needed `netlify-lambda` for  function folders.
 - However, if you want to use a build step for your functions (e.g. for webpack import/export, babel or typescript), you can use `netlify-lambda`, `tsc` or your own build tool to do this, just point Netlify Dev at your build output with the `functions` field in `netlify.toml`.
 - Finally, We also want **existing `netlify-lambda` users to be able to use Netlify Dev with no change to their workflow**. This is done through the [Netlify Dev Function Builder](https://github.com/netlify/netlify-dev-plugin#function-builders-function-builder-detection-and-relationship-with-netlify-lambda) abstraction. It is, however, a very new feature with only simple detection logic for now, that we aim to improve over time. If it doesn't work well for you, you can simply not use Netlify Dev for now while we work out all your bug reports.
