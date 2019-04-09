@@ -13,11 +13,26 @@ There are 3 ways to deploy functions to Netlify:
 2. each function as a zip of a folder of files
 3. as of [CLI v2.7](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys), a non-bundled, non-zipped, folder of files.
 
-`Netlify-Lambda` uses webpack to bundle up your functions and their dependencies for you, suiting the first approach. However, if you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the other approaches.
+`Netlify-Lambda` uses webpack to bundle up your functions and their dependencies for you, suiting the first approach. However, if you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the other approaches. In particular, try [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev).
 
-If this sounds confusing, support is available through [our regular channels](https://www.netlify.com/support/). An update on how this will be supported locally will come [in April](https://jamstackconf.com/nyc/). Importantly, **There will be no change to the workflow of existing `netlify-lambda` users.**
+If this sounds confusing, support is available through [our regular channels](https://www.netlify.com/support/). 
+</details>
+
+
+<details>
+  <summary><b>[`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) vs. Netlify-Lambda</b></summary>
+
+Some headline notes:
+
+- **`netlify-lambda` is not deprecated and will continue to be supported.**
+- Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously needed `netlify-lambda` for  function folders.
+- However, if you want to use a build step for your functions (e.g. for webpack import/export, babel or typescript), you can use `netlify-lambda`, `tsc` or your own build tool to do this, just point Netlify Dev at your build output with the `functions` field in `netlify.toml`.
+- Finally, We also want **existing `netlify-lambda` users to be able to use Netlify Dev with no change to their workflow**. This is done through the [Netlify Dev Function Builder](https://github.com/netlify/netlify-dev-plugin#function-builders-function-builder-detection-and-relationship-with-netlify-lambda) abstraction. It is, however, a very new feature with only simple detection logic for now, that we aim to improve over time. If it doesn't work well for you, you can simply not use Netlify Dev for now while we work out all your bug reports.
+
 
 </details>
+
+
 
 ## Installation
 
