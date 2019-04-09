@@ -20,7 +20,11 @@ If this sounds confusing, support is available through [our regular channels](ht
 
 
 <details>
-  <summary><b>[`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) vs. Netlify-Lambda</b></summary>
+  <summary><b>
+    
+    [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) vs. Netlify-Lambda
+    
+    </b></summary>
 
 Some headline notes:
 
