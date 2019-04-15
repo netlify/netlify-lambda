@@ -21,6 +21,8 @@ If this sounds confusing, support is available through [our regular channels](ht
 
 <details>
   <summary><b>Netlify Dev vs. Netlify-Lambda</b></summary>
+  
+  ### You can see how to convert a Netlify-Lambda project to Netlify Dev as well as why and how they work together in [this 48 min video here](https://www.youtube.com/watch?v=sakKOT6nkkE)
 
 [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **`netlify-lambda` is still recommended if you need a build step for your functions**, as explained here:
 
