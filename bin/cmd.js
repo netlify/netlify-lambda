@@ -27,19 +27,18 @@ program
   .action(function(cmd, options) {
     console.log("netlify-lambda: Starting server");
     var static = Boolean(program.static);
-    var server = serve.listen(program.port || 9000, static, Number(program.timeout) || 10);
     if (static) return; // early terminate, don't build
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
         return;
       }
-
+      
+      console.log(stats.toString({ color: true }));
+      var server = serve.listen(program.port || 9000, static, Number(program.timeout) || 10);
       stats.compilation.chunks.forEach(function(chunk) {
         server.clearCache(chunk.name);
       });
-
-      console.log(stats.toString({ color: true }));
     });
   });
 

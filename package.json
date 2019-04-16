@@ -10,6 +10,11 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "lib/*.js",
+    "!lib/*.spec.js",
+    "bin/*.js"
+  ],
   "author": "Mathias Biilmann Christensen",
   "license": "MIT",
   "repository": {
