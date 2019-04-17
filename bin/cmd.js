@@ -37,7 +37,7 @@ program
       console.log(stats.toString({ color: true }));
       var server = serve.listen(program.port || 9000, static, Number(program.timeout) || 10);
       stats.compilation.chunks.forEach(function(chunk) {
-        server.clearCache(chunk.name);
+        server.clearCache(chunk.name || chunk.id.toString());
       });
     });
   });
