@@ -18,7 +18,10 @@ program.version(pkg.version);
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
-  .option("-t --timeout <timeout>", "function invocation timeout in seconds (default: 10)")
+  .option(
+    "-t --timeout <timeout>",
+    "function invocation timeout in seconds (default: 10)"
+  )
   .option("-s --static", "serve pre-built lambda files");
 
 program
@@ -28,14 +31,21 @@ program
     console.log("netlify-lambda: Starting server");
     var static = Boolean(program.static);
     if (static) return; // early terminate, don't build
+    var server;
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
         return;
       }
-      
+
       console.log(stats.toString({ color: true }));
-      var server = serve.listen(program.port || 9000, static, Number(program.timeout) || 10);
+      if (!server) {
+        server = serve.listen(
+          program.port || 9000,
+          static,
+          Number(program.timeout) || 10
+        );
+      }
       stats.compilation.chunks.forEach(function(chunk) {
         server.clearCache(chunk.name);
       });
@@ -60,11 +70,13 @@ program
 
 // error on unknown commands
 // ref: https://github.com/tj/commander.js#custom-event-listeners
-program
-  .on('command:*', function () {
-    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
-    process.exit(1);
-  });
+program.on("command:*", function() {
+  console.error(
+    "Invalid command: %s\nSee --help for a list of available commands.",
+    program.args.join(" ")
+  );
+  process.exit(1);
+});
 
 program.parse(process.argv);
 
