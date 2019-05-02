@@ -8,7 +8,9 @@
     "netlify-lambda": "bin/cmd.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "version": "auto-changelog -p --template keepachangelog && git add .",
+    "prepublishOnly": "git push && git push --tags && gh-release"
   },
   "files": [
     "lib/*.js",
@@ -41,6 +43,8 @@
     "webpack-merge": "^4.1.4"
   },
   "devDependencies": {
+    "auto-changelog": "^1.13.0",
+    "gh-release": "^3.5.0",
     "jest": "^23.6.0"
   }
 }
