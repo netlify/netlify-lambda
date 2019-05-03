@@ -330,6 +330,17 @@ module.exports = {
 
 Then specify `netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
+If you're using firebase SDK and other native modules, check [this issue](https://github.com/netlify/netlify-lambda/issues/112#issuecomment-489072330) and use this plugin:
+
+```
+//./config/webpack.functions.js
+const nodeExternals = require('webpack-node-externals');
+
+module.exports = {
+  externals: [nodeExternals()],
+};
+```
+
 The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
 
 ### Babel configuration
