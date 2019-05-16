@@ -30,8 +30,18 @@ program
   .action(function(cmd, options) {
     console.log("netlify-lambda: Starting server");
     var static = Boolean(program.static);
-    if (static) return; // early terminate, don't build
     var server;
+    var startServer = function() {
+      server = serve.listen(
+        program.port || 9000,
+        static,
+        Number(program.timeout) || 10
+      );
+    }
+    if (static) {
+      startServer();
+      return; // early terminate, don't build
+    };
     build.watch(cmd, program.config, function(err, stats) {
       if (err) {
         console.error(err);
@@ -40,11 +50,7 @@ program
 
       console.log(stats.toString({ color: true }));
       if (!server) {
-        server = serve.listen(
-          program.port || 9000,
-          static,
-          Number(program.timeout) || 10
-        );
+        startServer();
       }
       stats.compilation.chunks.forEach(function(chunk) {
         server.clearCache(chunk.name);
