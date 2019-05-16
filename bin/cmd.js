@@ -53,7 +53,7 @@ program
         startServer();
       }
       stats.compilation.chunks.forEach(function(chunk) {
-        server.clearCache(chunk.name);
+        server.clearCache(chunk.name || chunk.id.toString());
       });
     });
   });
