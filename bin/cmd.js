@@ -26,7 +26,7 @@ const stringBooleanToBoolean = val => {
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
-  .option("-b --babelrc <no-babelrc>", "use .babelrc in root (default: true)", stringBooleanToBoolean)
+  .option("-b --babelrc babelrc>", "use .babelrc in root (default: true)", stringBooleanToBoolean)
   .option(
     "-t --timeout <timeout>",
     "function invocation timeout in seconds (default: 10)"
