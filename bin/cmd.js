@@ -52,7 +52,9 @@ program
       startServer();
       return; // early terminate, don't build
     };
-    build.watch(cmd, program.config, function(err, stats) {
+  
+    const { config: userWebpackConfig, babelrc: useBabelrc = true} = program;
+    build.watch(cmd, {userWebpackConfig, useBabelrc}, function(err, stats) {
       if (err) {
         console.error(err);
         return;
