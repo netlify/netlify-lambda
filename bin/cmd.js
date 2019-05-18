@@ -15,9 +15,19 @@ var serve = require("../lib/serve");
 
 program.version(pkg.version);
 
+const stringBooleanToBoolean = val => {
+  console.log({val});
+  if (typeof val !== 'string' && (val !== 'true' || val !== 'false')) {
+    throw Error(`Incorrect string value: ${val}`);
+  }
+
+  return val === 'true';
+};
+
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
+  .option("-b --babelrc <babelrc>", "use .babelrc in root (default: true)", stringBooleanToBoolean)
   .option(
     "-t --timeout <timeout>",
     "function invocation timeout in seconds (default: 10)"
@@ -63,8 +73,10 @@ program
   .description("build functions")
   .action(function(cmd, options) {
     console.log("netlify-lambda: Building functions");
+
+    const { config: userWebpackConfig, babelrc: useBabelrc = true} = program;
     build
-      .run(cmd, program.config)
+      .run(cmd, { userWebpackConfig, useBabelrc})
       .then(function(stats) {
         console.log(stats.toString({ color: true }));
       })
