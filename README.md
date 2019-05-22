@@ -441,7 +441,7 @@ Minor note: For the `identity` field, since we are not fully emulating Netlify I
 
 ## Debugging
 
-To debug lambdas, prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b), e.g. `npx --node-arg=--inspect netlify-lambda serve ...`. 
+To debug lambdas, it can be helpful to turn off minification and enable logging. Prepend the `serve` command with [npm's package runner npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b), e.g. `npx --node-arg=--inspect netlify-lambda serve ...`. 
 
 1. make sure that sourcemaps are built along the way (e.g. in the webpack configuration and the `tsconfig.json` if typescript is used)
 2. webpack's minification/uglification is turned off (see below):
@@ -454,6 +454,8 @@ module.exports = {
   optimization: { minimize: false }
 };
 ```
+
+You can see [a sample project with this setup here](https://github.com/sw-yx/throwaway-test-netlify-lambda).
 
 So you can run something like `npx --node-arg=--inspect netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
