@@ -12,22 +12,27 @@ var pkg = JSON.parse(
 );
 var build = require("../lib/build");
 var serve = require("../lib/serve");
+var install = require("../lib/install");
 
 program.version(pkg.version);
 
 const stringBooleanToBoolean = val => {
-  console.log({val});
-  if (typeof val !== 'string' && (val !== 'true' || val !== 'false')) {
+  console.log({ val });
+  if (typeof val !== "string" && (val !== "true" || val !== "false")) {
     throw Error(`Incorrect string value: ${val}`);
   }
 
-  return val === 'true';
+  return val === "true";
 };
 
 program
   .option("-c --config <webpack-config>", "additional webpack configuration")
   .option("-p --port <port>", "port to serve from (default: 9000)")
-  .option("-b --babelrc <babelrc>", "use .babelrc in root (default: true)", stringBooleanToBoolean)
+  .option(
+    "-b --babelrc <babelrc>",
+    "use .babelrc in root (default: true)",
+    stringBooleanToBoolean
+  )
   .option(
     "-t --timeout <timeout>",
     "function invocation timeout in seconds (default: 10)"
@@ -47,13 +52,13 @@ program
         static,
         Number(program.timeout) || 10
       );
-    }
+    };
     if (static) {
       startServer();
       return; // early terminate, don't build
-    };
-    const { config: userWebpackConfig, babelrc: useBabelrc = true} = program;
-    build.watch(cmd, { userWebpackConfig, useBabelrc}, function(err, stats) {
+    }
+    const { config: userWebpackConfig, babelrc: useBabelrc = true } = program;
+    build.watch(cmd, { userWebpackConfig, useBabelrc }, function(err, stats) {
       if (err) {
         console.error(err);
         return;
@@ -75,9 +80,9 @@ program
   .action(function(cmd, options) {
     console.log("netlify-lambda: Building functions");
 
-    const { config: userWebpackConfig, babelrc: useBabelrc = true} = program;
+    const { config: userWebpackConfig, babelrc: useBabelrc = true } = program;
     build
-      .run(cmd, { userWebpackConfig, useBabelrc})
+      .run(cmd, { userWebpackConfig, useBabelrc })
       .then(function(stats) {
         console.log(stats.toString({ color: true }));
       })
@@ -85,6 +90,17 @@ program
         console.error(err);
         process.exit(1);
       });
+  });
+
+program
+  .command("install [dir]")
+  .description("install functions")
+  .action(function(cmd, options) {
+    console.log("netlify-lambda: installing function dependencies");
+    install.run(cmd).catch(function(err) {
+      console.error(err);
+      process.exit(1);
+    });
   });
 
 // error on unknown commands
