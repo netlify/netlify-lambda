@@ -68,15 +68,21 @@ netlify-lambda install [folder]
 
 Sometimes your function folders will have dependencies unique to them, managed by a package.json local to that folder. This is a small utility function for installing those dependencies either on your local machine or as part of your build commands.
 
-By default it just runs on the functions folder specified in `netlify.toml`:
+By default it just runs on the functions folder specified in `netlify.toml`. Here's all you need to add to your `package.json` (see [this example](https://github.com/sw-yx/gatsby-netlify-form-example-v2/commit/f88462a4c37b5ddcdf5f394606ac14b58d6b475d#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)):
 
-```bash
-netlify-lambda install
+```js
+// package.json
+{
+   "dependencies": { // you probably don't want it in devDependencies! This is a common gotcha https://www.netlify.com/docs/build-gotchas/#devdependencies
+       "netlify-lambda": "^1.6.0"
+   },
+   "scripts": {
+       "postinstall": "netlify-lambda install"
+   },
+}
 ```
 
 This is what you should do if you are just using Netlify Dev without `netlify-lambda`.
-
-> 💁Check [this commit](https://github.com/sw-yx/gatsby-netlify-form-example-v2/commit/f88462a4c37b5ddcdf5f394606ac14b58d6b475d#diff-b9cfc7f2cdf78a7f4b91a753d10865a2) for an example of how to add `netlify-lambda install` in just two lines to fix your functions install issues. **Make sure it is in dependencies not devDependencies**. This is a [common gotcha](https://www.netlify.com/docs/build-gotchas/#devdependencies).
 
 If you're using `netlify-lambda serve` or `build`, however, you will want to run this install on the _source_ folder rather than the _dist_/netlify.toml functions folder, so you should run it with the same exact folder name as with those other commands:
 
