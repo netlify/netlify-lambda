@@ -20,17 +20,21 @@ If this sounds confusing, support is available through [our regular channels](ht
 </details>
 
 <details>
-  <summary><b>Netlify Dev vs. Netlify-Lambda</b></summary>
+  <summary>
   
-  ### You can see how to convert a Netlify-Lambda project to Netlify Dev as well as why and how they work together in [this 48 min video here](https://www.youtube.com/watch?v=sakKOT6nkkE)
+  **When to use Netlify Dev or `netlify-lambda` or both?**
+  
+  </summary>
 
-[`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **`netlify-lambda` is still recommended if you need a build step for your functions**, as explained here:
+[`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **Use `netlify-lambda` only if you need a build step for your functions**, as explained here:
 
 - **When to use Netlify Dev**: Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously just needed `netlify-lambda` for bundling multi-file functions or functions with node_module dependencies.
 - **When to use Netlify Lambda**: However, if you need a build step for your functions (e.g. for webpack import/export syntax, running babel transforms or typescript), you can use `netlify-lambda`, `tsc` or your own build tool to do this, just point Netlify Dev at your build output with the `functions` field in `netlify.toml`.
 - These responsibilities aren't exactly the same. Therefore **you can use Netlify Dev and Netlify Lambda together** to have BOTH a build step for functions from `netlify-lambda` and the full proxy environment from Netlify Dev. If you have a npm script in `package.json` for running `netlify-lambda serve ${functionsSourceFolder}`, Netlify Dev will [detect it](https://github.com/netlify/netlify-dev-plugin#function-builders-function-builder-detection-and-relationship-with-netlify-lambda) and run it for you. This way, **existing `netlify-lambda` users will be able to use Netlify Dev with no change to their workflow**
 
 Function Builder detection is a very new feature with only simple detection logic for now, that we aim to improve over time. If it doesn't work well for you, you can simply not use Netlify Dev for now while we work out all your bug reports. 🙏🏼
+
+**You can see how to convert a Netlify-Lambda project to Netlify Dev as well as why and how they work together in [this 48 min video here](https://www.youtube.com/watch?v=sakKOT6nkkE)**
 
 </details>
 
