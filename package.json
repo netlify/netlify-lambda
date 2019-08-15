@@ -45,6 +45,7 @@
   "devDependencies": {
     "auto-changelog": "^1.13.0",
     "gh-release": "^3.5.0",
+    "globby": "^10.0.1",
     "jest": "^23.6.0"
   }
 }
