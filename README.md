@@ -1,5 +1,7 @@
 ## Netlify Lambda
 
+[![Node](https://img.shields.io/node/v/netlify-lambda.svg?logo=node.js)](https://www.npmjs.com/package/netlify-lambda)
+
 This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/) with a simple webpack/babel build step. For function folders, there is also a small utility to install function folder dependencies.
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
