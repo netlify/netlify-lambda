@@ -47,5 +47,8 @@
     "auto-changelog": "^1.13.0",
     "gh-release": "^3.5.0",
     "jest": "^23.6.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }
