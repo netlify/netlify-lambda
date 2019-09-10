@@ -1,7 +1,5 @@
 ## Netlify Lambda
 
-[![Node](https://img.shields.io/node/v/netlify-lambda.svg?logo=node.js)](https://www.npmjs.com/package/netlify-lambda)
-
 This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/) with a simple webpack/babel build step. For function folders, there is also a small utility to install function folder dependencies.
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
@@ -21,14 +19,18 @@ If this sounds confusing, support is available through [our regular channels](ht
 
 </details>
 
+
+### When to use Netlify Dev or `netlify-lambda` or both?
+
 <details>
   <summary>
   
-  **When to use Netlify Dev or `netlify-lambda` or both?**
+  
+  [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **Use `netlify-lambda` only if you need a build step for your functions**
   
   </summary>
 
-[`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **Use `netlify-lambda` only if you need a build step for your functions**, as explained here:
+
 
 - **When to use Netlify Dev**: Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously just needed `netlify-lambda` for bundling multi-file functions or functions with node_module dependencies.
 - **When to use Netlify Lambda**: However, if you need a build step for your functions (e.g. for webpack import/export syntax, running babel transforms or typescript), you can use `netlify-lambda`, `tsc` or your own build tool to do this, just point Netlify Dev at your build output with the `functions` field in `netlify.toml`.
@@ -98,7 +100,7 @@ netlify-lambda install <folderName>
 
 We don't anticipate you will use this as often but it can be handy.
 
-### `netlify-lambda serve` and `netlify-lambda build`
+### `netlify-lambda build`
 
 At a high level, `netlify-lambda` takes a source folder (e.g. `src/lambda`, specified in your command) and outputs it to a built folder, (e.g. `built-lambda`, specified in your `netlify.toml` file).
 
@@ -167,7 +169,11 @@ export async function handler(event, context) {
   
   </details>
 
-## Using with `create-react-app`, Gatsby, and other development servers
+### `netlify-lambda serve`
+
+This command is pretty much superceded by Netlify Dev. We only keep it around for legacy/backward compatibility support reasons.
+
+#### `netlify-lambda serve`: Using with `create-react-app`, Gatsby, and other development servers
 
 <details>
 <summary><b>Why you need to proxy (for beginners)</b></summary>
@@ -180,7 +186,7 @@ If this desribes your situation, then you need to proxy for local development. R
 
 </details>
 
-### Proxying for local development
+#### `netlify-lambda serve`: Proxying for local development
 
 > ⚠️IMPORTANT! PLEASE READ THIS ESPECIALLY IF YOU HAVE CORS ISSUES⚠️
 
