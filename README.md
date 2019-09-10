@@ -23,13 +23,7 @@ If this sounds confusing, support is available through [our regular channels](ht
 ### When to use Netlify Dev or `netlify-lambda` or both?
 
 <details>
-  <summary>
-  
-  
-  [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev) is incrementally adoptable. **Use `netlify-lambda` only if you need a build step for your functions**
-  
-  </summary>
-
+  <summary><a href="https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev">Netlify Dev</a> is incrementally adoptable. <b>Use `netlify-lambda` only if you need a build step for your functions.</b> Expand this to read more on when to use either or both</summary>
 
 
 - **When to use Netlify Dev**: Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously just needed `netlify-lambda` for bundling multi-file functions or functions with node_module dependencies.
@@ -67,9 +61,11 @@ If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-r
 We expose three commands:
 
 ```bash
-netlify-lambda serve <folder>
 netlify-lambda build <folder>
 netlify-lambda install [folder]
+
+## legacy command - only preserved for backward compatibility
+netlify-lambda serve <folder> 
 ```
 
 ### `netlify-lambda install`
@@ -169,11 +165,11 @@ export async function handler(event, context) {
   
   </details>
 
-### `netlify-lambda serve`
+### `netlify-lambda serve` (legacy command)
 
 This command is pretty much superceded by Netlify Dev. We only keep it around for legacy/backward compatibility support reasons.
 
-#### `netlify-lambda serve`: Using with `create-react-app`, Gatsby, and other development servers
+#### `netlify-lambda serve` (legacy command): Using with `create-react-app`, Gatsby, and other development servers
 
 <details>
 <summary><b>Why you need to proxy (for beginners)</b></summary>
@@ -186,7 +182,7 @@ If this desribes your situation, then you need to proxy for local development. R
 
 </details>
 
-#### `netlify-lambda serve`: Proxying for local development
+#### `netlify-lambda serve` (legacy command): Proxying for local development
 
 > ⚠️IMPORTANT! PLEASE READ THIS ESPECIALLY IF YOU HAVE CORS ISSUES⚠️
 
@@ -548,6 +544,8 @@ All of the above are community maintained and not officially supported by Netlif
 - v1.2: https://twitter.com/swyx/status/1083446733374337024 Identity emulation (& others)
 - v1.3: https://github.com/netlify/netlify-lambda/releases/tag/v1.3.0
 - v1.4: New timeout feature https://github.com/netlify/netlify-lambda/pull/116
+- v1.5: Catch raw requests - a very common error for first time users pinging `localhost:9000` instead of `localhost:9000/.netlify/functions/myfunction` https://github.com/netlify/netlify-lambda/commit/bfebc0921a45d4f730b910b680e40e04928f7c29#diff-3288939317efd62bfc509440d662cacaR191
+- v1.6: New `install` command https://mobile.twitter.com/swyx/status/1162038490298818562 
 
 ## License
 
