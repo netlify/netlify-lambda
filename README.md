@@ -1,6 +1,6 @@
 ## Netlify Lambda
 
-This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/) with a simple webpack/babel build step. For function folders, there is also a small utility to install function folder dependencies.
+This is an optional tool that helps with building or locally developing [Netlify Functions](https://www.netlify.com/docs/functions/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) with a simple webpack/babel build step. For function folders, there is also a small utility to install function folder dependencies.
 
 The goal is to make it easy to write Lambda's with transpiled JS/TypeScript features and imported modules.
 
@@ -11,11 +11,11 @@ There are 3 ways to deploy functions to Netlify:
 
 1. each function as a single JS or Go file, possibly bundled by a build tool like `netlify-lambda` or `tsc`
 2. each function as a zip of a folder of files
-3. as of [CLI v2.7](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys), a non-bundled, non-zipped, folder of files.
+3. as of [CLI v2.7](https://www.netlify.com/docs/cli/#unbundled-javascript-function-deploys?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex), a non-bundled, non-zipped, folder of files.
 
-`Netlify-Lambda` uses webpack to bundle up your functions and their dependencies for you, suiting the first approach. However, if you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the other approaches. In particular, try [`Netlify Dev`](https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev).
+`Netlify-Lambda` uses webpack to bundle up your functions and their dependencies for you, suiting the first approach. However, if you have native node modules (or other dependencies that don't expect to be bundled like [the Firebase SDK](https://github.com/netlify/netlify-lambda/issues/112)) then you may want to try the other approaches. In particular, try [`Netlify Dev`](https://www.netlify.com/docs/cli/?utm_source=github&utm_medium=swyx-jamstack&utm_campaign=devex#netlify-dev-beta).
 
-If this sounds confusing, support is available through [our regular channels](https://www.netlify.com/support/).
+If this sounds confusing, support is available through [our regular channels](https://www.netlify.com/support/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex).
 
 </details>
 
@@ -23,7 +23,7 @@ If this sounds confusing, support is available through [our regular channels](ht
 ### When to use Netlify Dev or `netlify-lambda` or both?
 
 <details>
-  <summary><a href="https://github.com/netlify/netlify-dev-plugin#what-is-netlify-dev">Netlify Dev</a> is incrementally adoptable. <b>Use `netlify-lambda` only if you need a build step for your functions.</b> Expand this to read more on when to use either or both</summary>
+  <summary><a href="https://www.netlify.com/docs/cli/?utm_source=github&utm_medium=swyx-jamstack&utm_campaign=devex#netlify-dev-beta">Netlify Dev</a> is incrementally adoptable. <b>Use `netlify-lambda` only if you need a build step for your functions.</b> Expand this to read more on when to use either or both</summary>
 
 
 - **When to use Netlify Dev**: Part of Netlify Dev serves unbundled function folders through [zip-it-and-ship-it](https://github.com/netlify/zip-it-and-ship-it) with no build step. This is likely to be attractive to many users who previously just needed `netlify-lambda` for bundling multi-file functions or functions with node_module dependencies.
@@ -46,7 +46,7 @@ yarn add netlify-lambda
 
 This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
 
-If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from, e.g.
+If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) file, you'll need one ([example](https://github.com/netlify/create-react-app-lambda/blob/master/netlify.toml)). Define the `functions` field where the functions will be built to and served from, e.g.
 
 ```toml
 # example netlify.toml
@@ -112,15 +112,15 @@ It also watches your files and restarts the dev server on change. Note: if you a
 
 **IMPORTANT**:
 
-- You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/) file with a `functions` field.
+- You need a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-reference/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) file with a `functions` field.
 - Every function needs to be a top-level js/ts/mjs file. You can have subfolders inside the `netlify-lambda` folder, but those are only for supporting files to be imported by your top level function. Files that end with `.spec.*` or `.test.*` will be ignored so you can [colocate your tests](https://github.com/netlify/netlify-lambda/issues/99).
-- Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions) for more info.
+- Function signatures follow the [AWS event handler](https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html) syntax but must be named `handler`. [We use Node v8](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) so `async` functions **are** supported ([beware common mistakes](https://serverless.com/blog/common-node8-mistakes-in-lambda/)!). Read [Netlify Functions docs](https://www.netlify.com/docs/functions/#javascript-lambda-functions?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) for more info.
 - Functions [time out in 10 seconds](https://www.netlify.com/docs/functions/#custom-deployment-options) by default although extensions can be requested. We [try to replicate this locally](https://github.com/netlify/netlify-lambda/pull/116).
 
 <details>
   <summary><b>Environment variables in build and branch context</b></summary>
 
-Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables).
+Read Netlify's [documentation on environment variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex).
 `netlify-lambda` should respect the env variables you supply in `netlify.toml` accordingly (except for deploy previews, which make no sense to locally emulate).
 
 However, this is a [relatively new feature](https://github.com/netlify/netlify-lambda/issues/59), so if you encounter issues, file one.
@@ -191,7 +191,7 @@ When your function is deployed on Netlify, it will be available at `/.netlify/fu
 Say you are running `webpack-serve` on port 8080 and `netlify-lambda serve` on port 9000. Mounting `localhost:9000` to `/.netlify/functions/` on your `webpack-serve` server (`localhost:8080/.netlify/functions/`) will closely replicate what the final production environment will look like during development, and will allow you to assume the same function url path in development and in production.
 
 - If you are using with `create-react-app`, see [netlify/create-react-app-lambda](https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/src/setupProxy.js) for an example of how to do this with `create-react-app`. [setupProxy is partially documented in the CRA docs](https://facebook.github.io/create-react-app/docs/proxying-api-requests-in-development#configuring-the-proxy-manually). You can also learn how to do this from scratch in a video: https://www.youtube.com/watch?v=3ldSM98nCHI
-- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter), and here is an accompanying blogpost: [Turning the Static Dynamic: Gatsby + Netlify Functions + Netlify Identity](https://www.gatsbyjs.org/blog/2018-12-17-turning-the-static-dynamic/).
+- If you are using Gatsby, see [their Advanced Proxying docs](https://www.gatsbyjs.org/docs/api-proxy/#advanced-proxying). This is implemented in the [JAMstack Hackathon Starter](https://github.com/sw-yx/jamstack-hackathon-starter).
 - If you are using React-Static, check https://github.com/nozzle/react-static/issues/380.
 - If you are using Nuxt.js, see [this issue for how to proxy](https://github.com/netlify/netlify-lambda/pull/28#issuecomment-439675503).
 - If you are using Vue CLI, you may just use https://github.com/netlify/vue-cli-plugin-netlify-lambda/.
@@ -469,7 +469,7 @@ Use a `.babelrc` found in the directory `netlify-lambda` is run from. This can b
 
 ## Netlify Identity
 
-Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions) on how Netlify Functions and Netlify Identity work together. Basically you have to make your request with an `authorization` header and a `Bearer` token with your Netlify Identity JWT supplied. You can get this JWT from any of our Identity solutions from [gotrue-js](https://github.com/netlify/gotrue-js) to [netlify-identity-widget](https://github.com/netlify/netlify-identity-widget).
+Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-and-functions?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) on how Netlify Functions and Netlify Identity work together. Basically you have to make your request with an `authorization` header and a `Bearer` token with your Netlify Identity JWT supplied. You can get this JWT from any of our Identity solutions from [gotrue-js](https://github.com/netlify/gotrue-js) to [netlify-identity-widget](https://github.com/netlify/netlify-identity-widget).
 
 Since for practical purposes we cannot fully emulate Netlify Identity locally, we provide [simple JWT decoding inside the `context` of your function](https://github.com/netlify/netlify-lambda/pull/57). This will give you back the `user` info you need to work with.
 
@@ -495,7 +495,7 @@ You can see [a sample project with this setup here](https://github.com/sw-yx/thr
 
 So you can run something like `npx --node-arg=--inspect netlify-lambda serve --config ./webpack.functions.js`. If using VSCode, it is likely that the `sourceMapPathOverrides` have to be adapted for breakpoints to work. Read here for more info on [how to modify the webpack config](https://github.com/netlify/netlify-lambda/issues/64#issuecomment-429625191).
 
-Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
+Netlify Functions [run in Node v8.10](https://www.netlify.com/blog/2018/04/03/node.js-8.10-now-available-in-netlify-functions/?utm_source=github&utm_medium=swyx-netlify-lambda&utm_campaign=devex) and you may need to run the same version to mirror the environment locally. Also make sure to check that you aren't [committing one of these common Node 8 mistakes in Lambda!](https://serverless.com/blog/common-node8-mistakes-in-lambda/)
 
 **Special warning on `node-fetch`**: `node-fetch` and webpack [currently don't work well together](https://github.com/bitinn/node-fetch/issues/450). You will have to use the default export in your code:
 
