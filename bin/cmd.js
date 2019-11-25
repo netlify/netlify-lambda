@@ -63,8 +63,7 @@ program
         console.error(err);
         return;
       }
-
-      console.log(stats.toString({ color: true }));
+      console.log(stats.toString(stats.compilation.options.stats));
       if (!server) {
         startServer();
       }
@@ -84,7 +83,7 @@ program
     build
       .run(cmd, { userWebpackConfig, useBabelrc })
       .then(function(stats) {
-        console.log(stats.toString({ color: true }));
+        console.log(stats.toString(stats.compilation.options.stats));
       })
       .catch(function(err) {
         console.error(err);
