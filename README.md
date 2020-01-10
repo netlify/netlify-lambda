@@ -135,6 +135,7 @@ If you need local-only environment variables that you don't place in `netlify.to
   If you are new to writing Lambda functions, this section may help you. Function signatures should conform to one of either two styles. Traditional callback style:
   
   ```js
+// legacy callback style - not encouraged anymore, but you'll still see examples doing this
 exports.handler = function(event, context, callback) {
   // your server-side functionality
   callback(null, {
@@ -149,6 +150,7 @@ exports.handler = function(event, context, callback) {
   or you can use async/await:
   
   ```js
+// modern JS style - encouraged
 export async function handler(event, context) {
     return {
       statusCode: 200,
@@ -156,6 +158,7 @@ export async function handler(event, context) {
     };
 }
   ```
+> :warning: The above example only works with `netlify-lambda` because [it uses ES module syntax](https://community.netlify.com/t/async-await-lambda-function-example/6976/3)! If you get `Function invocation failed: SyntaxError: Unexpected token 'export'.` errors, this is why.
   
   For more Functions examples, check:
   
