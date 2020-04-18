@@ -167,6 +167,20 @@ export async function handler(event, context) {
   - the blogposts at the bottom of this README
   
   </details>
+  
+#### Common errors during build
+
+If you face a lot of errors related to missing dependencies or errors stating `Critical dependency: the request of a dependency is an expression`, then it might be related to the fact that you run npm modules that require node-externals. In this case simply add a webpack configuration like below:
+
+```
+const nodeExternals = require('webpack-node-externals');
+
+module.exports = {
+  externals: [nodeExternals()],
+};
+```
+
+More info on making netlify-lambda work with webpack [below](https://github.com/netlify/netlify-lambda/blob/master/README.md#webpack-configuration).
 
 ### `netlify-lambda serve` (legacy command)
 
