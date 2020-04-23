@@ -82,7 +82,7 @@ By default it just runs on the functions folder specified in `netlify.toml`. Her
    },
    "scripts": {
        "postinstall": "netlify-lambda install"
-   },
+   }
 }
 ```
 
