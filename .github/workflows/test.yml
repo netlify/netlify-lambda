@@ -1,0 +1,46 @@
+name: Node CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node-version: [10.x, 12.x, 13.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-
+      - name: log versions
+        run: node --version && npm --version
+      - name: install dependencies
+        run: npm ci
+      - name: run linter
+        run: npm run lint
+      - name: check formatting
+        run: npm run format:ci
+      - name: run tests
+        run: npm test
