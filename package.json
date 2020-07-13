@@ -46,7 +46,8 @@
   "devDependencies": {
     "auto-changelog": "^1.13.0",
     "gh-release": "^3.5.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "node": ">=8.0.0"
