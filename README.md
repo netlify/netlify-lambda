@@ -41,7 +41,7 @@ Function Builder detection is a very new feature with only simple detection logi
 **We recommend installing locally** rather than globally:
 
 ```bash
-yarn add netlify-lambda
+npm install netlify-lambda
 ```
 
 This will ensure your build scripts don't assume a global install which is better for your CI/CD (for example with Netlify's buildbot).
@@ -51,7 +51,7 @@ If you don't have a [`netlify.toml`](https://www.netlify.com/docs/netlify-toml-r
 ```toml
 # example netlify.toml
 [build]
-  command = "yarn build"
+  command = "npm run build"
   functions = "lambda" #  netlify-lambda reads this
   publish = "build"
 ```
