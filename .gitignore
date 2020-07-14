@@ -1,5 +1,4 @@
 node_modules/
 .vscode/
 *.swp
-package-lock.json
 .temp
