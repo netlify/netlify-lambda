@@ -59,7 +59,7 @@
     "rimraf": "^3.0.2"
   },
   "engines": {
-    "node": ">=v10.21.0"
+    "node": ">=v10.22.0"
   },
   "husky": {
     "hooks": {
