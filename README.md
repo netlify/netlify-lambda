@@ -78,7 +78,7 @@ By default it just runs on the functions folder specified in `netlify.toml`. Her
 // package.json
 {
    "dependencies": { // you probably don't want it in devDependencies! This is a common gotcha https://www.netlify.com/docs/build-gotchas/#devdependencies
-       "netlify-lambda": "^1.6.0"
+       "netlify-lambda": "^2.0.1"
    },
    "scripts": {
        "postinstall": "netlify-lambda install"
