@@ -43,7 +43,7 @@
     "globby": "^11.0.1",
     "jwt-decode": "^3.0.0",
     "toml": "^3.0.0",
-    "webpack": "^4.43.0",
+    "webpack": "^5.0.0",
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
