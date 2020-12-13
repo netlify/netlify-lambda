@@ -13,7 +13,7 @@
     "format:ci": "prettier --check 'lib/**/*.js' 'bin/**/*.js'",
     "test": "jest",
     "version": "auto-changelog -p --template keepachangelog && git add .",
-    "prepublishOnly": "git push && git push --tags && gh-release"
+    "prepublishOnly": "git push --follow-tags && gh-release"
   },
   "files": [
     "lib/*.js",
