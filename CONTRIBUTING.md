@@ -43,12 +43,7 @@ After submitting the pull request, please make sure the Continuous Integration c
 
 ## Releasing
 
-```bash
-npm version [major|minor|patch]
-```
-
-Then:
-
-```bash
-npm publish
-```
+1. Merge the release PR
+2. Switch to the default branch `git checkout master`
+3. Pull latest changes `git pull`
+4. Publish the package `npm publish`
