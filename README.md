@@ -351,7 +351,9 @@ Just remember to configure your `netlify.toml` to point to the `Next.js` build f
 
 ## Webpack Configuration
 
-By default the webpack configuration uses `babel-loader` to load all js files. Any `.babelrc` in the directory `netlify-lambda` is run from will be respected. If no `.babelrc` is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
+By default the webpack configuration uses `babel-loader` to load all js files. 
+`netlify-lambda` will search for [a valid babel config file](https://babeljs.io/docs/en/config-files) in the functions directory first and look upwards up to the directory `netlify-lambda` is run from (similar to how `babel-loader` looks for a Babel config file). 
+If no babel config file is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
 
 If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
@@ -383,7 +385,7 @@ The additional webpack config will be merged into the default config via [webpac
 
 The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
 
-However, if any `.babelrc` is found in the directory `netlify-lambda` is run from, or [folders above it](https://github.com/netlify/netlify-lambda/pull/92) (useful for monorepos), it will be used instead of the default one.
+However, if any valid Babel config file is found in the directory `netlify-lambda` is run from, or [folders above it](https://github.com/netlify/netlify-lambda/pull/92) (useful for monorepos), it will be used instead of the default one.
 
 It is possible to disable this behaviour by passing `--babelrc false`.
 
@@ -401,7 +403,7 @@ npm install --save-dev @babel/preset-typescript
 
 You may also want to add `typescript @types/node @types/aws-lambda`.
 
-2. Create a custom `.babelrc` file:
+2. Create a Babel config file, e.g. `.babelrc`:
 
 ```diff
 {
@@ -465,7 +467,7 @@ If you need an escape hatch and are building your lambda in some way that is inc
 
 Defaults to `true`
 
-Use a `.babelrc` found in the directory `netlify-lambda` is run from. This can be useful when you have conflicting babel-presets, more info [here](#babel-configuration)
+Use a Babel config file found in the directory `netlify-lambda` is run from. This can be useful when you have conflicting babel-presets, more info [here](#babel-configuration)
 
 ## Netlify Identity
 
