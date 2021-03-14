@@ -46,8 +46,8 @@ program
     console.log('netlify-lambda: Starting server');
     var static = Boolean(program.static);
     var server;
-    var startServer = function () {
-      server = serve.listen(
+    var startServer = async function () {
+      server = await serve.listen(
         program.port || 9000,
         static,
         Number(program.timeout) || 10,
@@ -58,19 +58,23 @@ program
       return; // early terminate, don't build
     }
     const { config: userWebpackConfig, babelrc: useBabelrc = true } = program;
-    build.watch(cmd, { userWebpackConfig, useBabelrc }, function (err, stats) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(stats.toString(stats.compilation.options.stats));
-      if (!server) {
-        startServer();
-      }
-      stats.compilation.chunks.forEach(function (chunk) {
-        server.clearCache(chunk.name || chunk.id.toString());
-      });
-    });
+    build.watch(
+      cmd,
+      { userWebpackConfig, useBabelrc },
+      async function (err, stats) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(stats.toString(stats.compilation.options.stats));
+        if (!server) {
+          await startServer();
+        }
+        stats.compilation.chunks.forEach(function (chunk) {
+          server.clearCache(chunk.name || chunk.id.toString());
+        });
+      },
+    );
   });
 
 program
