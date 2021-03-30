@@ -408,8 +408,15 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 ```diff
 {
   "presets": [
-    "@babel/preset-typescript",
-    "@babel/preset-env"
+    "@babel/preset-typescript"
+    [
+		  "@babel/preset-env",
+		  {
+		    "targets": {
+		      "node": true
+		    }
+		  }
+    ]
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
