@@ -405,11 +405,18 @@ You may also want to add `typescript @types/node @types/aws-lambda`.
 
 2. Create a Babel config file, e.g. `.babelrc`:
 
-```diff
+```json
 {
   "presets": [
     "@babel/preset-typescript",
-    "@babel/preset-env"
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": true
+        }
+      }
+    ]
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
