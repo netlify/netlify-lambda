@@ -353,7 +353,7 @@ Just remember to configure your `netlify.toml` to point to the `Next.js` build f
 
 By default the webpack configuration uses `babel-loader` to load all js files. 
 `netlify-lambda` will search for [a valid babel config file](https://babeljs.io/docs/en/config-files) in the functions directory first and look upwards up to the directory `netlify-lambda` is run from (similar to how `babel-loader` looks for a Babel config file). 
-If no babel config file is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L93-L104).
+If no babel config file is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L138-L176).
 
 If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
@@ -383,7 +383,7 @@ The additional webpack config will be merged into the default config via [webpac
 
 ### Babel configuration
 
-The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L138-L176).
+The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L93-L104).
 
 However, if any valid Babel config file is found in the directory `netlify-lambda` is run from, or [folders above it](https://github.com/netlify/netlify-lambda/pull/92) (useful for monorepos), it will be used instead of the default one.
 
