@@ -353,7 +353,7 @@ Just remember to configure your `netlify.toml` to point to the `Next.js` build f
 
 By default the webpack configuration uses `babel-loader` to load all js files. 
 `netlify-lambda` will search for [a valid babel config file](https://babeljs.io/docs/en/config-files) in the functions directory first and look upwards up to the directory `netlify-lambda` is run from (similar to how `babel-loader` looks for a Babel config file). 
-If no babel config file is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L11-L15a).
+If no babel config file is found, a [few basic settings are used](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L138-L176).
 
 If you need to use additional webpack modules or loaders, you can specify an additional webpack config with the `-c`/`--config` option when running either `serve` or `build`.
 
@@ -383,7 +383,7 @@ The additional webpack config will be merged into the default config via [webpac
 
 ### Babel configuration
 
-The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/master/lib/build.js#L19-L33).
+The default webpack configuration uses `babel-loader` with a [few basic settings](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/build.js#L93-L104).
 
 However, if any valid Babel config file is found in the directory `netlify-lambda` is run from, or [folders above it](https://github.com/netlify/netlify-lambda/pull/92) (useful for monorepos), it will be used instead of the default one.
 
@@ -482,7 +482,7 @@ Make sure to [read the docs](https://www.netlify.com/docs/functions/#identity-an
 
 Since for practical purposes we cannot fully emulate Netlify Identity locally, we provide [simple JWT decoding inside the `context` of your function](https://github.com/netlify/netlify-lambda/pull/57). This will give you back the `user` info you need to work with.
 
-Minor note: For the `identity` field, since we are not fully emulating Netlify Identity, we can't give you details on the Identity instance, so we give you [unambiguous strings](https://github.com/netlify/netlify-lambda/blob/master/lib/serve.js#L87) so you know not to rely on it locally: `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_URL` and `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_TOKEN`. In production, of course, Netlify Functions will give you the correct `identity.url` and `identity.token` fields. We find we dont use this info often in our functions so it is not that big of a deal in our judgment.
+Minor note: For the `identity` field, since we are not fully emulating Netlify Identity, we can't give you details on the Identity instance, so we give you [unambiguous strings](https://github.com/netlify/netlify-lambda/blob/be5305a0cf8a56b028e62345422c91c022855178/lib/serve.js#L88-L94) so you know not to rely on it locally: `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_URL` and `NETLIFY_LAMBDA_LOCALLY_EMULATED_IDENTITY_TOKEN`. In production, of course, Netlify Functions will give you the correct `identity.url` and `identity.token` fields. We find we dont use this info often in our functions so it is not that big of a deal in our judgment.
 
 ## Debugging
 
