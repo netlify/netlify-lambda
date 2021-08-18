@@ -44,7 +44,7 @@
     "jwt-decode": "^3.0.0",
     "toml": "^3.0.0",
     "webpack": "^4.43.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.0.0",
