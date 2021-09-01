@@ -379,7 +379,7 @@ module.exports = {
 };
 ```
 
-The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge.smart` method.
+The additional webpack config will be merged into the default config via [webpack-merge's](https://www.npmjs.com/package/webpack-merge) `merge` method.
 
 ### Babel configuration
 
