@@ -17,7 +17,6 @@ var install = require('../lib/install');
 program.version(pkg.version);
 
 const stringBooleanToBoolean = (val) => {
-  console.log({ val });
   if (typeof val !== 'string' && (val !== 'true' || val !== 'false')) {
     throw Error(`Incorrect string value: ${val}`);
   }
