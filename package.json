@@ -47,8 +47,8 @@
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.0.0",
-    "@commitlint/config-conventional": "^13.0.0",
+    "@commitlint/cli": "^16.0.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "eslint": "^7.0.0",
     "husky": "^4.0.7",
     "jest": "^27.0.0",
