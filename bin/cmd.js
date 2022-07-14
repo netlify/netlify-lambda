@@ -18,7 +18,6 @@ program.version(pkg.version);
 program.showHelpAfterError();
 
 const stringBooleanToBoolean = (val) => {
-  console.log({ val });
   if (typeof val !== 'string' && (val !== 'true' || val !== 'false')) {
     throw Error(`Incorrect string value: ${val}`);
   }
