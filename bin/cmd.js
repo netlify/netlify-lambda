@@ -15,6 +15,7 @@ var serve = require('../lib/serve');
 var install = require('../lib/install');
 
 program.version(pkg.version);
+program.showHelpAfterError();
 
 const stringBooleanToBoolean = (val) => {
   console.log({ val });
@@ -42,24 +43,26 @@ program
 program
   .command('serve <dir>')
   .description('serve and watch functions')
-  .action(function (cmd) {
+  .action(function (dir) {
     console.log('netlify-lambda: Starting server');
-    var static = Boolean(program.static);
+    var opts = program.opts();
+    var static = Boolean(opts.static);
     var server;
     var startServer = async function () {
       server = await serve.listen(
-        program.port || 9000,
+        opts.port || 9000,
         static,
-        Number(program.timeout) || 10,
+        Number(opts.timeout) || 10,
       );
     };
     if (static) {
       startServer();
       return; // early terminate, don't build
     }
-    const { config: userWebpackConfig, babelrc: useBabelrc = true } = program;
+    const { config: userWebpackConfig, babelrc: useBabelrc = true } =
+      program.opts();
     build.watch(
-      cmd,
+      dir,
       { userWebpackConfig, useBabelrc },
       async function (err, stats) {
         if (err) {
@@ -80,12 +83,13 @@ program
 program
   .command('build <dir>')
   .description('build functions')
-  .action(function (cmd) {
+  .action(function (dir) {
     console.log('netlify-lambda: Building functions');
 
-    const { config: userWebpackConfig, babelrc: useBabelrc = true } = program;
+    const { config: userWebpackConfig, babelrc: useBabelrc = true } =
+      program.opts();
     build
-      .run(cmd, { userWebpackConfig, useBabelrc })
+      .run(dir, { userWebpackConfig, useBabelrc })
       .then(function (stats) {
         console.log(stats.toString(stats.compilation.options.stats));
       })
@@ -98,9 +102,9 @@ program
 program
   .command('install [dir]')
   .description('install functions')
-  .action(function (cmd) {
+  .action(function (dir) {
     console.log('netlify-lambda: installing function dependencies');
-    install.run(cmd).catch(function (err) {
+    install.run(dir).catch(function (err) {
       console.error(err);
       process.exit(1);
     });
