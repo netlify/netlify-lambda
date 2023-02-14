@@ -7,7 +7,6 @@ This guide covers the following use cases of netlify-lambda and how to accomplis
 - [Bundle with Webpack](#bundle-with-webpack)
 - [Install function dependencies](#install-function-dependencies)
 
-
 ## Run Netlify Functions locally
 
 The tooling to run functions locally has been completely integrated into the Netlify CLI, which offers even more functionality like local debugging.
@@ -17,7 +16,6 @@ If you had `netlify-lambda` in your npm scripts, you can migrate by changing to 
 For example in a theoretical Gatsby project you can migrate with the following changes:
 
 > package.json
-
 
 ```diff
  {
@@ -38,12 +36,12 @@ For example in a theoretical Gatsby project you can migrate with the following c
 ## Use TypeScript or non-standard JavaScript features
 
 Netlify now supports TypeScript and non-standard JavaScript features.
-For TypeScript there is no configuration needed and it will work out of the box. The same is true if you use ESM modules in your functions. The bundling logic will automatically detect these and use `esbuild` to bundle the functions.
+For TypeScript there is no configuration needed and it will work out of the box. The same is true if you use ESM modules in your functions. The bundling logic will automatically detect these and use `esbuild` or `nft` to bundle the functions.
 In any other case you can set the `node_bundler` to `esbuild` yourself for the functions in your `netlify.toml` file. https://docs.netlify.com/configure-builds/file-based-configuration/#functions
 
 Should `esbuild` not work for your use case then please report this to us or use webpack directly as described in the next section.
 
-## Bundle with Webpack 
+## Bundle with Webpack
 
 If after trying our [automated bundling](#use-typescript-or-non-standard-javascript-features) you still want to use webpack to bundle your functions, you can use webpack directly and adjust the config to your needs. The following example is for webpack 4, which is the version that netlify-lambda used.
 
@@ -121,6 +119,8 @@ module.exports = {
 Consider moving the dependencies of your functions into your main `package.json` for automatic installation during local development. If this is not possible you can use the following change.
 
 Note that this is needed for local development only. The Netlify build system will detect and install dependencies of your functions.
+
+> package.json
 
 ```diff
  {
