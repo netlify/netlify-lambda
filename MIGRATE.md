@@ -1,14 +1,23 @@
 # Migration Guide
 
-This guide covers some use cases of netlify-lambda and how to accomplish them without it.
+This guide covers the following use cases of netlify-lambda and how to accomplish them without this deprecated tool.
 
-## Running Netlify functions locally
+- [Run Netlify functions locally](#run-netlify-functions-locally)
+- [Use Typescript or non-standard JavaScript features](#use-typescript-or-non-standard-javascript-features)
+- [Bundle with Webpack](#bundle-with-webpack)
+- [Install function dependencies](#install-function-dependencies)
 
-The functionality to have functions run locally has been completely integrated into the Netlify CLI and offers even more functionality like local debugging.
 
-If you had `netlify-lambda` in you npm scripts you can simply migrate by changing to the Netlify CLIs `dev` command.
+## Run Netlify Functions locally
+
+The tooling to run functions locally has been completely integrated into the Netlify CLI, which offers even more functionality like local debugging.
+
+If you had `netlify-lambda` in your npm scripts, you can migrate by changing to the Netlify CLI `dev` command.
 
 For example in a theoretical Gatsby project you can migrate with the following changes:
+
+> package.json
+
 
 ```diff
  {
@@ -26,19 +35,17 @@ For example in a theoretical Gatsby project you can migrate with the following c
  }
 ```
 
-## Using Typescript or non-standard JavaScript features
+## Use TypeScript or non-standard JavaScript features
 
-Netlify now also supports Typescript and non-standard JavaScript features.
-For Typescript there is no configuration needed and tit will work out of the box. The same is true if you use ESM modules in your functions. The bundling logic will automatically detect this and use `esbuild` to bundle the function.
-In any other case you can enable set the `node_bundler` to `esbuild` yourself for the functions in your `netlify.toml` file. https://docs.netlify.com/configure-builds/file-based-configuration/#functions
+Netlify now supports TypeScript and non-standard JavaScript features.
+For TypeScript there is no configuration needed and it will work out of the box. The same is true if you use ESM modules in your functions. The bundling logic will automatically detect these and use `esbuild` to bundle the functions.
+In any other case you can set the `node_bundler` to `esbuild` yourself for the functions in your `netlify.toml` file. https://docs.netlify.com/configure-builds/file-based-configuration/#functions
 
-Should `esbuild` not work for you usecase then please report this to us or use webpack directly. You can check how this works in the next section.
+Should `esbuild` not work for your use case then please report this to us or use webpack directly as described in the next section.
 
-## Webpack bundling
+## Bundle with Webpack 
 
-You might want to give our automated bundling a try (see above).
-
-If you still want to use webpack to bundle your functions, you can simply use webpack yourself and adjust the following config to your needs. This example is for webpack 4, which is the version that netlify-lambda also used.
+If after trying our [automated bundling](#use-typescript-or-non-standard-javascript-features) you still want to use webpack to bundle your functions, you can use webpack directly and adjust the config to your needs. The following example is for webpack 4, which is the version that netlify-lambda used.
 
 > package.json
 
@@ -111,9 +118,9 @@ module.exports = {
 
 ## Install function dependencies
 
-Consider moving the dependencies of your functions into your main `package.json`. If this is not possible you can use the following change.
+Consider moving the dependencies of your functions into your main `package.json` for automatic installation during local development. If this is not possible you can use the following change.
 
-Note that, this is only needed for local development, the Netlify Build System will detect and install dependencies of your functions.
+Note that this is needed for local development only. The Netlify build system will detect and install dependencies of your functions.
 
 ```diff
  {
