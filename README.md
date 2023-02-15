@@ -4,7 +4,6 @@ Netlify Lambda is deprecated and we do not recommend using it anymore. Most of i
 
 There is a detailed guide in [MIGRATE.md](MIGRATE.md) to help you migrate away from netlify-lambda.
 
-*So long, and thanks for all the fish!*
 
 ## License
 
